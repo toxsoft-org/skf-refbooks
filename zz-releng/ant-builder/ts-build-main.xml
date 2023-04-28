@@ -17,7 +17,6 @@
   <!-- TODO: -->
   <target name="build-lib-jar" depends="clean" description="Сборка общих плагинов">
     <ant dir="../../org.toxsoft.skf.refbooks.lib" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" />
-    <ant dir="../../org.toxsoft.skf.refbooks.gui" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" />
   </target>
 
   <!-- ЦЕЛЬ: сборка plugin-ов -->
@@ -28,8 +27,7 @@
                        exportSource="true"
                        exportSourceBundle="false"
                        exportType="directory"
-                       plugins="org.toxsoft.skf.refbooks.lib,
-                                org.toxsoft.skf.refbooks.gui"
+                       plugins="org.toxsoft.skf.refbooks.lib"
                        useworkspacecompiledclasses="true"
                        useJARFormat="true" />
   </target>

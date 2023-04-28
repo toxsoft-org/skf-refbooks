@@ -6,10 +6,8 @@
       </description>
    </category-def>
    <bundle id="org.toxsoft.skf.refbooks.lib"/>
-   <bundle id="org.toxsoft.skf.refbooks.gui"/>
 
    <!-- sources -->
    <bundle id="org.toxsoft.skf.refbooks.lib.source"/>
-   <bundle id="org.toxsoft.skf.refbooks.gui.source"/>
 
 </site>

@@ -6,10 +6,10 @@
       </description>
    </category-def>
    <!-- TODO: -->
-   <!-- <bundle id="org.toxsoft.skf.refbooks.???"/> -->
+   <bundle id="org.toxsoft.skf.refbooks.gui"/>
 
    <!-- sources -->
    <!-- TODO: -->
-   <!-- <bundle id="org.toxsoft.skf.refbooks.???.source"/> -->
+   <bundle id="org.toxsoft.skf.refbooks.gui.source"/>
 
 </site>
