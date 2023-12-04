@@ -515,6 +515,7 @@
       <modules>
         <!-- TODO rcp-библиотеки -->
         <module>org.toxsoft.skf.refbooks.gui</module>
+        <module>org.toxsoft.skf.refbooks.skide</module>
 
         <module>zz-releng/p2.rcp</module>
         <module>zz-releng/ant.rcp</module>
