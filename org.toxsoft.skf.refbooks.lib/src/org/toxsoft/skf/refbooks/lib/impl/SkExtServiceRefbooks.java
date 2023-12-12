@@ -2,6 +2,7 @@ package org.toxsoft.skf.refbooks.lib.impl;
 
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
+import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
 import static org.toxsoft.skf.refbooks.lib.ISkRefbookServiceHardConstants.*;
 import static org.toxsoft.skf.refbooks.lib.impl.ISkResources.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
@@ -205,7 +206,8 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbook rb : rbs ) {
         if( rb.nmName().equals( aRefbookInfo.nmName() ) && // новое имя уже встречается?
-        (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый справочник
+            (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый
+                                                                                     // справочник
         {
           vr = ValidationResult.warn( FMT_WARN_RB_NAME_ALREADY_EXISTS, aRefbookInfo.nmName() );
         }
@@ -235,7 +237,7 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbookItem item : items ) {
         if( item.nmName().equals( aItemInfo.nmName() ) && // новое имя уже встречается?
-        (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
+            (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
         {
           vr = ValidationResult.warn( FMT_WARN_ITEM_NAME_ALREADY_EXISTS, aItemInfo.nmName() );
         }
@@ -305,10 +307,12 @@ public class SkExtServiceRefbooks
 
   @Override
   protected void doInit( ITsContextRo aArgs ) {
-    // TODO ensure refbook class CLSID_REFBOOK existence
+    // ensure refbook class CLSID_REFBOOK existence and claim objects
+    IDtoClassInfo rbClassDto = internalCreateRefbookClassDto();
+    sysdescr().defineClass( rbClassDto );
+    objServ().registerObjectCreator( CLSID_REFBOOK, SkRefbook.CREATOR );
 
-    // TODO register refbook and default items object creator
-    // os.registerObjectCreator( CLASSID_REFBOOK, SkRefbook.CREATOR );
+    // TODO register default items object creator
     // os.registerObjectCreator( rbItemClassIdMatcher, SkRefbookItem.CREATOR );
 
     // claim on classes
@@ -331,6 +335,18 @@ public class SkExtServiceRefbooks
   // ------------------------------------------------------------------------------------
   // implementation
   //
+
+  /**
+   * Creates DTO of {@link ISkRefbookServiceHardConstants#CLSID_REFBOOK} class.
+   *
+   * @return {@link IDtoClassInfo} - refbook class info
+   */
+  private static IDtoClassInfo internalCreateRefbookClassDto() {
+    DtoClassInfo cinf = new DtoClassInfo( CLSID_REFBOOK, GW_ROOT_CLASS_ID, IOptionSet.NULL );
+    OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.setValue( cinf.params(), AV_TRUE );
+    cinf.attrInfos().add( ATRINF_ITEM_CLASS_ID );
+    return cinf;
+  }
 
   // ------------------------------------------------------------------------------------
   // package API
