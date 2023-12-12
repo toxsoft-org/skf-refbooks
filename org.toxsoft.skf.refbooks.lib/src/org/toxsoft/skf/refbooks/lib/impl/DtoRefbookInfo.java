@@ -52,8 +52,28 @@ public class DtoRefbookInfo
     dto.clobInfos().setAll( aSource.clobInfos() );
     dto.rivetInfos().setAll( aSource.rivetInfos() );
     dto.linkInfos().setAll( aSource.linkInfos() );
-
     return dto;
+  }
+
+  /**
+   * Creates the DTO of the specified refbook.
+   * <p>
+   * Created DTO has only refbook specific properties, without superclass properties.
+   *
+   * @param aRefbook {@link ISkRefbook} - the refbook to create DTO for
+   * @return {@link DtoRefbookInfo} - an editable instance of the refbook describing DTO
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   */
+  public static DtoRefbookInfo of( ISkRefbook aRefbook ) {
+    TsNullArgumentRtException.checkNull( aRefbook );
+    ISkSysdescr sysdescr = aRefbook.coreApi().sysdescr();
+    ISkClassInfo clsInfo = sysdescr.getClassInfo( aRefbook.itemClassId() );
+    DtoRefbookInfo info = new DtoRefbookInfo( aRefbook.id(), clsInfo.params() );
+    info.attrInfos().addAll( clsInfo.attrs().listSelf() );
+    info.clobInfos().addAll( clsInfo.clobs().listSelf() );
+    info.rivetInfos().addAll( clsInfo.rivets().listSelf() );
+    info.linkInfos().addAll( clsInfo.links().listSelf() );
+    return info;
   }
 
   // ------------------------------------------------------------------------------------

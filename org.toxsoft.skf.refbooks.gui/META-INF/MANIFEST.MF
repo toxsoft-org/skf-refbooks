@@ -26,4 +26,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skf.refbooks.gui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.skf.refbooks.gui,
+ org.toxsoft.skf.refbooks.gui.glib,
  org.toxsoft.skf.refbooks.gui.km5

@@ -27,7 +27,7 @@ public interface ISkRefbook
   // boolean isUserEdiable(); // false= GUI can not CRUD refbook and any of it's item. CRUD via API is enabled
 
   /**
-   * Returns the refbook items idnetifiers, not items themselfs.
+   * Returns the refbook items identifiers, not items themselves.
    *
    * @return {@link IList}&lt;T&gt; - the refbook items identifiers list
    */
@@ -36,7 +36,7 @@ public interface ISkRefbook
   /**
    * Finds the item by the specified identifier {@link ISkRefbookItem#id()}.
    * <p>
-   * Once again note that itemidentifier {@link ISkRefbookItem#id()} the same as it's {@link ISkObject#strid()}.
+   * Once again note that item identifier {@link ISkRefbookItem#id()} the same as it's {@link ISkObject#strid()}.
    *
    * @param <T> - items expected type
    * @param aItemId String - the specified identifier
@@ -57,9 +57,9 @@ public interface ISkRefbook
   /**
    * Defines (either creates new or updates existing) item.
    * <p>
-   * It is possible to use {@link ISkRefbookItem} descedanat implementations for refbook items. Item creator must be
+   * It is possible to use {@link ISkRefbookItem} descendant implementations for refbook items. Item creator must be
    * defined via {@link ISkObjectService#registerObjectCreator(String, ISkObjectCreator)} before first use of this
-   * method and before first access to the the uskat database content. When registering item objects creator use
+   * method and before first access to the the USkat database content. When registering item objects creator use
    * {@link ISkRefbookServiceHardConstants#makeItemClassIdFromRefbookId(String)} as class ID.
    *
    * @param aItemInfo {@link IDtoFullObject} - the new properties of the item

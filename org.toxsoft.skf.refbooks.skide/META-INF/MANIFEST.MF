@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Skide Refbooks plugin
-Bundle-SymbolicName: org.toxsoft.skf.refbooks.skide
+Bundle-SymbolicName: org.toxsoft.skf.refbooks.skide;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.toxsoft.skf.refbooks.skide.Activator
+Bundle-Vendor: toxsoft.org
 Export-Package: org.toxsoft.skf.refbooks.skide,
  org.toxsoft.skf.refbooks.skide.e4.addons,
  org.toxsoft.skf.refbooks.skide.main
-Bundle-Activator: org.toxsoft.skf.refbooks.skide.Activator
-Bundle-Vendor: toxsoft.org
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,

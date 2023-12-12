@@ -1,18 +1,16 @@
 package org.toxsoft.skf.refbooks.lib;
 
-import org.toxsoft.core.tslib.bricks.events.ITsEventer;
-import org.toxsoft.core.tslib.bricks.strid.coll.IStridablesList;
-import org.toxsoft.core.tslib.bricks.time.IQueryInterval;
-import org.toxsoft.core.tslib.bricks.time.ITimedList;
-import org.toxsoft.core.tslib.bricks.validator.ITsValidationSupport;
-import org.toxsoft.core.tslib.bricks.validator.impl.TsValidationFailedRtException;
-import org.toxsoft.core.tslib.utils.errors.TsItemNotFoundRtException;
-import org.toxsoft.core.tslib.utils.errors.TsNullArgumentRtException;
-import org.toxsoft.uskat.core.ISkHardConstants;
-import org.toxsoft.uskat.core.api.ISkService;
-import org.toxsoft.uskat.core.api.evserv.SkEvent;
-import org.toxsoft.uskat.core.api.objserv.ISkObjectServiceListener;
-import org.toxsoft.uskat.core.api.objserv.ISkObjectServiceValidator;
+import org.toxsoft.core.tslib.bricks.events.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.bricks.time.*;
+import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.bricks.validator.impl.*;
+import org.toxsoft.core.tslib.gw.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.uskat.core.*;
+import org.toxsoft.uskat.core.api.*;
+import org.toxsoft.uskat.core.api.evserv.*;
+import org.toxsoft.uskat.core.api.objserv.*;
 
 /**
  * Refbooks support.
@@ -39,7 +37,7 @@ public interface ISkRefbookService
   /**
    * Finds the refbook by the refbook item class identifier {@link ISkRefbook#itemClassId()}.
    *
-   * @param aRefbookItemClassId String iterefbook item class identifier
+   * @param aRefbookItemClassId String - refbook item class identifier
    * @return {@link ISkRefbookItem} - found refbook or <code>null</code> if none
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
@@ -53,7 +51,11 @@ public interface ISkRefbookService
   IStridablesList<ISkRefbook> listRefbooks();
 
   /**
-   * Defined (either creates new or changes existing) refbook.
+   * Defines (either creates new or changes existing) refbook.
+   * <p>
+   * Argument must contain only self properties of the class, without parent properties. That is, as the
+   * {@link ISkRefbookItem} is direct subclass of the {@link ISkObject}, argument must <b>not</b> contain any property
+   * of the class {@link IGwHardConstants#GW_ROOT_CLASS_ID}.
    *
    * @param aDpuRefbookInfo {@link IDtoRefbookInfo} - information about refbook
    * @return {@link ISkRefbook} - created or edited refbook

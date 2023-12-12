@@ -10,6 +10,9 @@ import org.toxsoft.uskat.core.api.sysdescr.dto.*;
  * <p>
  * This is much like {@link IDtoClassInfo} but without unneeded real-time properties and the {@link #id()} is refbook
  * identifier, not the refbook or items class identifier.
+ * <p>
+ * Actually the refbook DTO defines the Sk-class of the refbook <b>items</b>,not a refbook itself. Any refbook is just
+ * an object of the class {@link ISkRefbookServiceHardConstants#CLSID_REFBOOK}.
  *
  * @author hazard157
  */

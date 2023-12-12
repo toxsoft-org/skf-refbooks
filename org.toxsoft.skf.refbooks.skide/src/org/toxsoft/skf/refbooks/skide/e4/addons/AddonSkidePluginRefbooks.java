@@ -1,8 +1,11 @@
 package org.toxsoft.skf.refbooks.skide.e4.addons;
 
 import org.eclipse.e4.core.contexts.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
+import org.toxsoft.skf.refbooks.gui.*;
 import org.toxsoft.skf.refbooks.skide.*;
+import org.toxsoft.skf.refbooks.skide.Activator;
 import org.toxsoft.skf.refbooks.skide.main.*;
 import org.toxsoft.skide.core.api.*;
 
@@ -24,6 +27,11 @@ public class AddonSkidePluginRefbooks
   // ------------------------------------------------------------------------------------
   // MwsAbstractAddon
   //
+
+  @Override
+  protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
+    aQuantRegistrator.registerQuant( new QuantSkRefbooksGui() );
+  }
 
   @Override
   protected void initApp( IEclipseContext aAppContext ) {

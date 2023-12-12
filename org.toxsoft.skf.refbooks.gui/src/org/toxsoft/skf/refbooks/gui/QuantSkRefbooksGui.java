@@ -2,6 +2,8 @@ package org.toxsoft.skf.refbooks.gui;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
+import org.toxsoft.skf.refbooks.gui.km5.*;
+import org.toxsoft.uskat.core.gui.km5.*;
 
 /**
  * The library quant.
@@ -11,9 +13,17 @@ import org.toxsoft.core.tsgui.bricks.quant.*;
 public class QuantSkRefbooksGui
     extends AbstractQuant {
 
-  protected QuantSkRefbooksGui() {
+  /**
+   * Constructor.
+   */
+  public QuantSkRefbooksGui() {
     super( QuantSkRefbooksGui.class.getSimpleName() );
+    KM5Utils.registerContributorCreator( KM5RefbooksContributor.CREATOR );
   }
+
+  // ------------------------------------------------------------------------------------
+  // AbstractQuant
+  //
 
   @Override
   protected void doInitApp( IEclipseContext aAppContext ) {

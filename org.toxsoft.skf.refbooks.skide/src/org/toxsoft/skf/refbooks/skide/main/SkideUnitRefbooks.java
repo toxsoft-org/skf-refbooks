@@ -1,8 +1,8 @@
 package org.toxsoft.skf.refbooks.skide.main;
 
 import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
-import static org.toxsoft.core.tsgui.graphics.icons.ITsStdIconIds.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
+import static org.toxsoft.skf.refbooks.skide.ISkidePluginRefbooksConstants.*;
 import static org.toxsoft.skf.refbooks.skide.ISkidePluginRefbooksSharedResources.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
@@ -29,7 +29,7 @@ public class SkideUnitRefbooks
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_SKIDE_REFBOOKS, //
         TSID_DESCRIPTION, STR_SKIDE_REFBOOKS_D, //
-        TSID_ICON_ID, ICONID_ARROW_RIGHT //
+        TSID_ICON_ID, ICONID_SKIDE_PLUGIN_REFBOOKS //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
   }
