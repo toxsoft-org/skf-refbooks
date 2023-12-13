@@ -7,6 +7,7 @@ import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
+import org.toxsoft.core.tsgui.bricks.stdevents.*;
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.*;
 import org.toxsoft.core.tsgui.m5.model.*;
@@ -76,6 +77,10 @@ public class RefbooksListPanel
    */
   public void refresh() {
     panel.refresh();
+  }
+
+  public void addSelectionListener( ITsSelectionChangeListener<ISkRefbook> aListener ) {
+    panel.addTsSelectionListener( aListener );
   }
 
 }

@@ -1,14 +1,17 @@
 package org.toxsoft.skf.refbooks.gui.km5;
 
+import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
 import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
 
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tslib.av.opset.*;
+import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.lib.impl.*;
+import org.toxsoft.uskat.core.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.km5.*;
 
@@ -42,12 +45,16 @@ public class SkRefbookM5LifecycleManager
 
   private static DtoRefbookInfo createRefbookDto( IM5Bunch<ISkRefbook> aValues ) {
     String refbookId = aValues.getAsAv( FID_REFBOOK_ID ).asString();
+    IOptionSetEdit params = new OptionSet();
+    params.setStr( FID_NAME, aValues.getAsAv( ISkHardConstants.AID_NAME ).asString() );
+    params.setStr( FID_DESCRIPTION, aValues.getAsAv( ISkHardConstants.AID_DESCRIPTION ).asString() );
+
     DtoRefbookInfo rbInfo;
     if( aValues.originalEntity() != null ) {
       rbInfo = DtoRefbookInfo.of( aValues.originalEntity() );
     }
     else {
-      rbInfo = new DtoRefbookInfo( refbookId, IOptionSet.NULL );
+      rbInfo = new DtoRefbookInfo( refbookId, params );
     }
 
     // TODO fill rbInfo from aValues

@@ -86,7 +86,7 @@ public class PanelRefbookItemsEditor
 
     sfMain.setWeights( 3000, 7000 );
     // setup
-    refbooksListPanel.addTsSelectionListener( ( s, i ) -> whenRefbooksListSelectionChanges() );
+    refbooksListPanel.addSelectionListener( ( s, i ) -> whenRefbooksListSelectionChanges() );
     refbookService().eventer().addListener( this );
   }
 
