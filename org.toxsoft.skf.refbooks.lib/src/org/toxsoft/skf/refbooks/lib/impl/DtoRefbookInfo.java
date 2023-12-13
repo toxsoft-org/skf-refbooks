@@ -69,6 +69,7 @@ public class DtoRefbookInfo
     ISkSysdescr sysdescr = aRefbook.coreApi().sysdescr();
     ISkClassInfo clsInfo = sysdescr.getClassInfo( aRefbook.itemClassId() );
     DtoRefbookInfo info = new DtoRefbookInfo( aRefbook.id(), clsInfo.params() );
+    info.setNameAndDescription( aRefbook.nmName(), aRefbook.description() );
     info.attrInfos().addAll( clsInfo.attrs().listSelf() );
     info.clobInfos().addAll( clsInfo.clobs().listSelf() );
     info.rivetInfos().addAll( clsInfo.rivets().listSelf() );
