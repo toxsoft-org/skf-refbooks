@@ -71,4 +71,11 @@ public class RefbooksListPanel
     panel.setSelectedItem( aItem );
   }
 
+  /**
+   * refresh panel content
+   */
+  public void refresh() {
+    panel.refresh();
+  }
+
 }

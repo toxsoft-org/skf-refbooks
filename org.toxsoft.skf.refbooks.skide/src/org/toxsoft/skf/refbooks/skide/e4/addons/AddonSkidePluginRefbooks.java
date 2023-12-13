@@ -4,10 +4,14 @@ import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skf.refbooks.gui.*;
+import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.skf.refbooks.lib.impl.*;
 import org.toxsoft.skf.refbooks.skide.*;
 import org.toxsoft.skf.refbooks.skide.Activator;
 import org.toxsoft.skf.refbooks.skide.main.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.uskat.core.*;
+import org.toxsoft.uskat.core.gui.conn.*;
 
 /**
  * Plugin addon.
@@ -42,6 +46,11 @@ public class AddonSkidePluginRefbooks
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     ISkidePluginRefbooksConstants.init( aWinContext );
+    ISkCoreApi coreApi = aWinContext.get( ISkConnectionSupplier.class ).defConn().coreApi();
+    if( !coreApi.services().hasKey( ISkRefbookService.SERVICE_ID ) ) {
+      coreApi.addService( SkExtServiceRefbooks.CREATOR );
+    }
+
   }
 
 }

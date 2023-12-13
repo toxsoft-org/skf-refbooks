@@ -48,6 +48,11 @@ public class KM5RefbooksContributor
     // refbook objects model
     M5Model<ISkRefbook> rbModel = new SkRefbookM5Model( skConn() );
     m5().addModel( rbModel );
+    // добавляем свою рукотворную модель структуры справочника
+    RbedDtoRefbookInfoM5Model dtoRbItemModel = new RbedDtoRefbookInfoM5Model( skConn() );
+    m5().addModel( dtoRbItemModel );
+    mids.add( dtoRbItemModel.id() );
+
     mids.add( rbModel.id() );
     // refbook items objects models
     ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
