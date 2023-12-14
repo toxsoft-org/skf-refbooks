@@ -42,7 +42,7 @@ public class SkRefbookItemM5Model
    */
   public SkRefbookItemM5Model( String aId, ISkConnection aConn ) {
     super( aId, ISkRefbookItem.class, aConn );
-    addFieldDefs( SKID, CLASS_ID, STRID, NAME, DESCRIPTION );
+    addFieldDefs( STRID, NAME, DESCRIPTION );
     ISkRefbookService rbServ = aConn.coreApi().getService( ISkRefbookService.SERVICE_ID );
     ISkRefbook rb = rbServ.findRefbookByItemClassId( id() );
     TsInternalErrorRtException.checkNull( rb );

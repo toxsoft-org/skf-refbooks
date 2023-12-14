@@ -14,6 +14,7 @@ import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.uskat.core.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
@@ -129,7 +130,9 @@ public class SkRefbookItemM5LifecycleManager
     IOptionSetEdit attrs = new OptionSet();
     // занесем значения атрибутов
     for( IDtoAttrInfo attrInfo : cInfo.attrs().list() ) {
-      attrs.setValue( attrInfo.id(), aValues.getAsAv( attrInfo.id() ) );
+      if( !ISkHardConstants.isSkSysAttr( attrInfo ) ) {
+        attrs.setValue( attrInfo.id(), aValues.getAsAv( attrInfo.id() ) );
+      }
     }
     IDtoObject dtoObj = new DtoObject( skid, attrs, IStringMap.EMPTY );
     // создаем карту связей
