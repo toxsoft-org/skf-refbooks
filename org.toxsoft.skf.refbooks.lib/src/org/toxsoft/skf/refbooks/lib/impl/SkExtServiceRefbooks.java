@@ -311,10 +311,8 @@ public class SkExtServiceRefbooks
     IDtoClassInfo rbClassDto = internalCreateRefbookClassDto();
     sysdescr().defineClass( rbClassDto );
     objServ().registerObjectCreator( CLSID_REFBOOK, SkRefbook.CREATOR );
-
-    // TODO register default items object creator
-    // os.registerObjectCreator( rbItemClassIdMatcher, SkRefbookItem.CREATOR );
-
+    // ensure created ISkRefbookItem instances are of Java class SkrefbookItem
+    objServ().registerObjectCreator( REFBOOK_ITEM_CLASS_ID_MATCHER, SkRefbookItem.CREATOR );
     // claim on classes
     sysdescr().svs().addValidator( claimingValidator );
     objServ().svs().addValidator( claimingValidator );

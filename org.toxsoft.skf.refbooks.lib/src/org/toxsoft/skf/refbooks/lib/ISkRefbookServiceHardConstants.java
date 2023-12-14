@@ -16,6 +16,7 @@ import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.gw.gwid.*;
 import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.core.tslib.utils.txtmatch.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.impl.dto.*;
 
@@ -41,6 +42,11 @@ public interface ISkRefbookServiceHardConstants {
    * Refbook item classes identifier starting IDpath.
    */
   String CLSID_PREFIX_REFBOOK_ITEM = CLSID_PREFIX + ".Item";
+
+  /**
+   * {@link TextMatcher} accepts class IDs of the refbook items {@link ISkRefbook#itemClassId()}.
+   */
+  TextMatcher REFBOOK_ITEM_CLASS_ID_MATCHER = new TextMatcher( ETextMatchMode.STARTS, CLSID_PREFIX_REFBOOK_ITEM, true );
 
   /**
    * ID of attribute {@link #ATRINF_ITEM_CLASS_ID}.
