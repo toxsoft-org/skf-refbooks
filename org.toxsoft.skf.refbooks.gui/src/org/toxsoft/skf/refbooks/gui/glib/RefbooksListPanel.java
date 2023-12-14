@@ -79,6 +79,11 @@ public class RefbooksListPanel
     panel.refresh();
   }
 
+  /**
+   * Add refbook list selection change listener
+   *
+   * @param aListener selection change listener
+   */
   public void addSelectionListener( ITsSelectionChangeListener<ISkRefbook> aListener ) {
     panel.addTsSelectionListener( aListener );
   }

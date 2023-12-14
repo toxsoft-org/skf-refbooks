@@ -14,4 +14,9 @@ interface ISkResources {
   String STR_N_REFBOOK_NAME = "Name";
   String STR_D_REFBOOK_NAME = "Name of refbook";
 
+  /**
+   * {@link SkRefbookItemM5LifecycleManager}
+   */
+  String FMT_ERR_ITEM_ALREADY_EXISTS = "Element with id %s already exist";
+
 }
