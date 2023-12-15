@@ -1,8 +1,14 @@
 package org.toxsoft.skf.refbooks.gui.km5;
 
 import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
+import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
+import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 
+import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.m5.*;
+import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tslib.coll.*;
@@ -76,6 +82,18 @@ public class SkRefbookItemM5Model
         addFieldDefs( multyLinkField( linkInfo, linkInfo.rightClassIds(), false ) );
       }
     }
+    setPanelCreator( new M5DefaultPanelCreator<>() {
+
+      @Override
+      protected IM5CollectionPanel<ISkRefbookItem> doCreateCollEditPanel( ITsGuiContext aContext,
+          IM5ItemsProvider<ISkRefbookItem> aItemsProvider, IM5LifecycleManager<ISkRefbookItem> aLifecycleManager ) {
+        OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
+        OPDEF_IS_FILTER_PANE.setValue( aContext.params(), AV_TRUE );
+        MultiPaneComponentModown<ISkRefbookItem> mpc =
+            new SkRefbookItemM5Mpc( aContext, rb, model(), aItemsProvider, aLifecycleManager );
+        return new M5CollectionPanelMpcModownWrapper<>( mpc, false );
+      }
+    } );
   }
 
   @Override

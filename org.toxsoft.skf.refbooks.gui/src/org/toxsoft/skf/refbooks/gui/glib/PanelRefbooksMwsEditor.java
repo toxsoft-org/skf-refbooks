@@ -1,54 +1,45 @@
 package org.toxsoft.skf.refbooks.gui.glib;
 
 import static org.toxsoft.skf.refbooks.gui.glib.ISkResources.*;
-import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
+
+import java.util.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.dialogs.*;
-import org.toxsoft.core.tsgui.m5.*;
-import org.toxsoft.core.tsgui.m5.gui.panels.*;
-import org.toxsoft.core.tsgui.m5.model.*;
-import org.toxsoft.core.tsgui.panels.inpled.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
-import org.toxsoft.skf.refbooks.lib.impl.*;
 import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
 /**
- * Panel to edit refbook items.
+ * Panel to edit refbook items in MWS.
  * <p>
  * Contains the {@link SashForm} with two parts:
  * <ul>
  * <li>left side - {@link RefbooksListPanel} to select refbook to edit it's items;</li>
- * <li>right side - {@link RefbookItemsListPanel} edits list of the refbook selected in left list.</li>
+ * <li>right side - tabs {@link RefbookItemsListPanel} edits list items of the refbook selected in left list.</li>
  * </ul>
  *
- * @author hazard157
  * @author dima
  */
-public class PanelRefbookItemsEditor
+public class PanelRefbooksMwsEditor
     extends SkPanel
     implements ISkRefbookServiceListener {
 
   /*
    * Визуальный список выбора журнала для редактирования
    */
-  private final RefbooksListPanel               refbooksListPanel;
-  private final IM5EntityPanel<IDtoRefbookInfo> refbookEditPane;
-  private final IInplaceEditorPanel             inplaceEditor;
-  private final CTabItem                        refbookContentTab;
-  private final CTabFolder                      refbookEditorsFolder;
-  // private final RefbookItemsListPanel itemsPanel;
+  private final RefbooksListPanel refbooksListPanel;
+
+  private final CTabFolder refbookEditorsFolder;
 
   /**
    * When this flag is <code>true</code> selection events are ingored in the handler
@@ -70,7 +61,7 @@ public class PanelRefbookItemsEditor
    * @param aUsedConnId {@link IdChain} - ID of connection to be used
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public PanelRefbookItemsEditor( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId ) {
+  public PanelRefbooksMwsEditor( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId ) {
     super( aParent, aContext, aUsedConnId );
     this.setLayout( new BorderLayout() );
     SashForm sfMain = new SashForm( this, SWT.HORIZONTAL );
@@ -78,22 +69,6 @@ public class PanelRefbookItemsEditor
 
     // right pane
     refbookEditorsFolder = new CTabFolder( sfMain, SWT.NONE );
-    CTabItem refbookStructTab = new CTabItem( refbookEditorsFolder, SWT.NONE | SWT.CLOSE );
-    refbookStructTab.setText( STR_N_REFBOOK_STRUCT );
-    // TODO перенести код в RefbookStructPanel
-    IM5Model<IDtoRefbookInfo> modelDto = m5().getModel( MID_RBED_DTO_REFBOOK_INFO, IDtoRefbookInfo.class );
-    IM5LifecycleManager<IDtoRefbookInfo> lmDto = modelDto.getLifecycleManager( skConn() );
-    ITsGuiContext ctxDto = new TsGuiContext( tsContext() );
-    refbookEditPane = modelDto.panelCreator().createEntityEditorPanel( ctxDto, lmDto );
-    refbookEditPane.setEditable( false );
-    AbstractContentPanel contentPanel = new InplaceContentM5EntityPanelWrapper<>( ctxDto, refbookEditPane );
-    inplaceEditor = new InplaceEditorContainerPanel( aContext, contentPanel );
-    // Закрепляем редактор структуры за новой закладкой
-    refbookStructTab.setControl( inplaceEditor.createControl( refbookEditorsFolder ) );
-
-    // TODO перенести код в RefbookItemsListPanel
-    refbookContentTab = new CTabItem( refbookEditorsFolder, SWT.NONE | SWT.CLOSE );
-    refbookContentTab.setText( STR_N_REFBOOK_CONTENT );
 
     sfMain.setWeights( 3000, 7000 );
     // setup
@@ -116,19 +91,19 @@ public class PanelRefbookItemsEditor
     if( ignoreSelectionChange ) {
       return;
     }
-    ISkRefbook sel = refbooksListPanel.selectedItem();
-    addNewRefbookEditor( sel );
-    if( inplaceEditor.isEditing() ) {
-      inplaceEditor.cancelAndFinishEditing();
-    }
-    if( sel != null ) {
-      IDtoRefbookInfo dto = DtoRefbookInfo.of( sel );
-      refbookEditPane.setEntity( dto );
+    ISkRefbook selectedRefbook = refbooksListPanel.selectedItem();
+    // ищем в открытых закладках
+    Optional<CTabItem> op = refbookTabItem( selectedRefbook );
+    if( op.isPresent() ) {
+      // справочник уже открыт, обновим его
+      CTabItem refbookTabItem = op.get();
+      // справочник уже открыт, просто активируем закладку
+      refbookEditorsFolder.setSelection( refbookTabItem );
     }
     else {
-      refbookEditPane.setEntity( null );
+      // добавим новый справочник
+      addNewRefbookEditor( selectedRefbook );
     }
-    inplaceEditor.refresh();
   }
 
   /**
@@ -139,31 +114,35 @@ public class PanelRefbookItemsEditor
    */
   @Override
   public void onRefbookChanged( ECrudOp aOp, String aRefbookId ) {
-    ISkRefbook sel = refbooksListPanel.selectedItem();
-    // no selected refbook means that there is nothing in right panel, just refresh left panel
-    if( sel == null ) {
-      refbooksListPanel.refresh();
-      return;
+    // refresh left panel
+    refbooksListPanel.refresh();
+    updateRbIfOpen( aRefbookId );
+  }
+
+  private void updateRbIfOpen( String aRefbookId ) {
+    ISkRefbook changedRefbook = refbookService().findRefbook( aRefbookId );
+    // ищем в открытых закладках
+    Optional<CTabItem> op = refbookTabItem( changedRefbook );
+    if( op.isPresent() ) {
+      // справочник уже открыт, обновим его
+      CTabItem refbookTabItem = op.get();
+      RefbookItemsListPanel panel = (RefbookItemsListPanel)refbookTabItem.getControl();
+      panel.setRefbook( changedRefbook );
     }
-    ignoreSelectionChange = true;
-    try {
-      refbooksListPanel.refresh();
-      refbooksListPanel.setSelectedItem( sel );
-      if( inplaceEditor.isEditing() ) {
-        IDtoRefbookInfo dto = DtoRefbookInfo.of( sel );
-        refbookEditPane.setEntity( dto );
+  }
+
+  private Optional<CTabItem> refbookTabItem( ISkRefbook changedRefbook ) {
+    for( CTabItem refbookTabItem : refbookEditorsFolder.getItems() ) {
+      if( refbookTabItem.getText().compareTo( changedRefbook.nmName() ) == 0 ) {
+        return Optional.of( refbookTabItem );
       }
     }
-    finally {
-      ignoreSelectionChange = false;
-    }
-
+    return Optional.ofNullable( null );
   }
 
   @Override
   public void onRefbookItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
-    // TODO Auto-generated method stub
-
+    updateRbIfOpen( aRefbookId );
   }
 
   /**
@@ -172,22 +151,20 @@ public class PanelRefbookItemsEditor
    * @param aSelectedItem выбранный справочник
    */
   protected void addNewRefbookEditor( ISkRefbook aSelectedItem ) {
-    // TODO перенести код в RefbookStructPanel
+    CTabItem refbookTab = new CTabItem( refbookEditorsFolder, SWT.NONE | SWT.CLOSE );
+    refbookTab.setText( aSelectedItem.nmName() );
+
     ISkRefbookService skRefbookService = coreApi().getService( ISkRefbookService.SERVICE_ID );
     ISkRefbook skRefbook = skRefbookService.findRefbook( aSelectedItem.id() );
     if( skRefbook == null ) {
       TsDialogUtils.error( getShell(), FMT_ERR_NO_REFBOOK_BY_ID, aSelectedItem.id() );
       return;
     }
-    IM5Model<ISkRefbookItem> model = m5().getModel( aSelectedItem.itemClassId(), ISkRefbookItem.class );
-    // инициализация GUI
-    ITsGuiContext ctx = new TsGuiContext( tsContext() );
-    IM5LifecycleManager<ISkRefbookItem> lm = model.getLifecycleManager( skConn() );
-    IM5CollectionPanel<ISkRefbookItem> panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
-
-    panel.createControl( refbookEditorsFolder );
-    // Закрепляем созданный справочник за закладкой
-    refbookContentTab.setControl( panel.getControl() );
+    // создаем панель редактирования содержимого справочника
+    RefbookItemsListPanel itemsPanel =
+        new RefbookItemsListPanel( refbookEditorsFolder, tsContext(), getUsedConnectionId(), false );
+    itemsPanel.setRefbook( aSelectedItem );
+    refbookTab.setControl( itemsPanel );
   }
 
 }

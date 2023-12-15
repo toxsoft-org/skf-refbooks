@@ -48,7 +48,7 @@ public class SkRefbookItemM5LifecycleManager
   //
 
   private ISkRefbookService refbookService() {
-    return master().coreApi().getService( ISkRefbookService.SERVICE_ID );
+    return coreApi().getService( ISkRefbookService.SERVICE_ID );
   }
 
   private ISkRefbook refbook() {

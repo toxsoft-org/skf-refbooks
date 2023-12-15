@@ -2,7 +2,11 @@ package org.toxsoft.skf.refbooks.gui.glib;
 
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
+import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.*;
+import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
@@ -13,6 +17,7 @@ import org.toxsoft.uskat.core.gui.glib.*;
  * Panel displays editable items list of the specified refbook.
  *
  * @author hazard157
+ * @author dima
  */
 public class RefbookItemsListPanel
     extends SkStdEventsProducerPanel<ISkRefbookItem> {
@@ -35,6 +40,7 @@ public class RefbookItemsListPanel
    */
   public RefbookItemsListPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId, boolean aViewer ) {
     super( aParent, aContext, aUsedConnId );
+    this.setLayout( new BorderLayout() );
   }
 
   // ------------------------------------------------------------------------------------
@@ -49,7 +55,14 @@ public class RefbookItemsListPanel
         panel = null;
       }
       if( refbook != null ) {
-        // TODO create IM5CollectionPanel of the specified refbook
+        // create IM5CollectionPanel of the specified refbook
+        IM5Model<ISkRefbookItem> model = m5().getModel( refbook.itemClassId(), ISkRefbookItem.class );
+        // инициализация GUI
+        ITsGuiContext ctx = new TsGuiContext( tsContext() );
+        IM5LifecycleManager<ISkRefbookItem> lm = model.getLifecycleManager( skConn() );
+        panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
+        panel.createControl( this );
+        panel.getControl().setLayoutData( BorderLayout.CENTER );
       }
     }
     finally {
