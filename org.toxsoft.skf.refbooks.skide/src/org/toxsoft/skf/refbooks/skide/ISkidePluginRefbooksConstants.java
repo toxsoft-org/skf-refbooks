@@ -14,9 +14,9 @@ public interface ISkidePluginRefbooksConstants {
   // ------------------------------------------------------------------------------------
   // Icons
 
-  String PREFIX_OF_ICON_FIELD_NAME    = "ICONID_";               //$NON-NLS-1$
-  String ICONID_SKIDE_PLUGIN_REFBOOKS = "skide-plugin-refbooks"; //$NON-NLS-1$
-  String ICONID_SKIDE_UNIT_REFBOOKS   = "skide-unit-refbooks";   //$NON-NLS-1$
+  String PREFIX_OF_ICON_FIELD_NAME    = "ICONID_";             //$NON-NLS-1$
+  String ICONID_SKIDE_PLUGIN_REFBOOKS = "app-refbooks";        //$NON-NLS-1$
+  String ICONID_SKIDE_UNIT_REFBOOKS   = "skide-unit-refbooks"; //$NON-NLS-1$
 
   /**
    * Constants registration.
