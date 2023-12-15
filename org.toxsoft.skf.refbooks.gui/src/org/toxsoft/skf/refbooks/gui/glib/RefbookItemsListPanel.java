@@ -26,7 +26,7 @@ public class RefbookItemsListPanel
   private IM5CollectionPanel<ISkRefbookItem> panel   = null;
 
   /**
-   * Constructor.
+   * Constructor for use in SkIDE.
    * <p>
    * Constructor stores reference to the context, does not creates copy.
    * <p>
@@ -40,6 +40,22 @@ public class RefbookItemsListPanel
    */
   public RefbookItemsListPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId, boolean aViewer ) {
     super( aParent, aContext, aUsedConnId );
+    this.setLayout( new BorderLayout() );
+  }
+
+  /**
+   * Constructor for use in MWS.
+   * <p>
+   * Constructor stores reference to the context, does not creates copy.
+   * <p>
+   * The connection ID is the key to get connection from the {@link ISkConnectionSupplier#allConns()} map.
+   *
+   * @param aParent {@link Composite} - parent component
+   * @param aContext {@link ITsGuiContext} - the context
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   */
+  public RefbookItemsListPanel( Composite aParent, ITsGuiContext aContext ) {
+    super( aParent, aContext );
     this.setLayout( new BorderLayout() );
   }
 
