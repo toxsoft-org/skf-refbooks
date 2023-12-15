@@ -7,8 +7,8 @@ package org.toxsoft.skf.refbooks.gui.glib;
  */
 interface ISkResources {
 
-  String FMT_ERR_NO_REFBOOK_BY_ID = "Can't find refbook by id: %s";
-  String STR_N_REFBOOK_STRUCT     = "Structure";
-  String STR_N_REFBOOK_CONTENT    = "Content";
+  String FMT_ERR_NO_REFBOOK_BY_ID = Messages.FMT_ERR_NO_REFBOOK_BY_ID;
+  String STR_N_REFBOOK_STRUCT     = Messages.STR_N_REFBOOK_STRUCT;
+  String STR_N_REFBOOK_CONTENT    = Messages.STR_N_REFBOOK_CONTENT;
 
 }
