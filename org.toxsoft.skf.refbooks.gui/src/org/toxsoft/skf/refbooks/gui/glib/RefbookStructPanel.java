@@ -1,12 +1,23 @@
 package org.toxsoft.skf.refbooks.gui.glib;
 
+import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
+
 import java.util.*;
 
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
+import org.toxsoft.core.tsgui.m5.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.*;
+import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.skf.refbooks.lib.impl.*;
+import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
@@ -14,13 +25,16 @@ import org.toxsoft.uskat.core.gui.glib.*;
  * Panel to edit specified refbook structure as described by {@link IDtoRefbookInfo}.
  *
  * @author hazard157
+ * @author dima
  */
 public class RefbookStructPanel
-    extends SkPanel {
+    extends SkPanel
+    implements ISkRefbookServiceListener {
+
+  private final IM5EntityPanel<IDtoRefbookInfo> panel;
 
   /**
-   * TODO listen to the refbook service and update struture when not SELF editing refbook<br>
-   * TODO listen to the refbook service and set clear the panel when refbook is removed
+   * TODO listen to the refbook service and update structure when not SELF editing refbook<br>
    */
 
   private String refbookId = null;
@@ -46,10 +60,14 @@ public class RefbookStructPanel
    */
   public RefbookStructPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId ) {
     super( aParent, aContext, aUsedConnId );
+    this.setLayout( new BorderLayout() );
 
-    // TODO PanelRefbookStruct.PanelRefbookStruct()
-    // use M5-model of IDtoRefbookInfo
-
+    IM5Model<IDtoRefbookInfo> modelDto = m5().getModel( MID_RBED_DTO_REFBOOK_INFO, IDtoRefbookInfo.class );
+    IM5LifecycleManager<IDtoRefbookInfo> lmDto = modelDto.getLifecycleManager( skConn() );
+    ITsGuiContext ctxDto = new TsGuiContext( tsContext() );
+    panel = modelDto.panelCreator().createEntityEditorPanel( ctxDto, lmDto );
+    panel.createControl( this );
+    panel.getControl().setLayoutData( BorderLayout.CENTER );
   }
 
   // ------------------------------------------------------------------------------------
@@ -93,12 +111,37 @@ public class RefbookStructPanel
    */
   public void setRefbookId( String aRefbookId ) {
     if( !Objects.equals( refbookId, aRefbookId ) ) {
+      ISkRefbook sel = refbookServ().findRefbook( aRefbookId );
       if( refbookId != null ) {
-        TsItemNotFoundRtException.checkNull( refbookServ().findRefbook( aRefbookId ) );
+        TsItemNotFoundRtException.checkNull( sel );
       }
       refbookId = aRefbookId;
-      // TODO refresh panel
+      // refresh panel
+      IDtoRefbookInfo dtoRefbook = DtoRefbookInfo.of( sel );
+      panel.setEntity( dtoRefbook );
     }
+  }
+
+  @Override
+  public void onRefbookChanged( ECrudOp aOp, String aRefbookId ) {
+    // listen to the refbook service and set clear the panel when refbook is removed
+    if( aRefbookId == refbookId ) {
+      switch( aOp ) {
+        case REMOVE:
+          panel.setEntity( null );
+          break;
+        case CREATE:
+        case EDIT:
+        case LIST:
+        default:
+          break;
+      }
+    }
+  }
+
+  @Override
+  public void onRefbookItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
+    // nop
   }
 
 }

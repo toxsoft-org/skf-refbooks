@@ -19,4 +19,13 @@ interface ISkResources {
    */
   String FMT_ERR_ITEM_ALREADY_EXISTS = "Element with id %s already exist";
 
+  /**
+   * {@link SkRefbookItemM5Mpc}
+   */
+  String STR_ACT_PRINT_REFBOOK      = "Print refbook content";
+  String STR_ACT_PRINT_REFBOOK_D    = "Print refbook content";
+  String AUTHOR_STR                 = "Author: ";
+  String DATE_STR                   = "printed: ";
+  String PRINT_REFBOOK_TITLE_FORMAT = "Refbook: %s";
+
 }

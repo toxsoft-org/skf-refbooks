@@ -32,7 +32,7 @@ class SkideUnitRefbooksPanel
     }
 
     ITsGuiContext ctx = new TsGuiContext( tsContext() );
-    PanelRefbookItemsEditor panel = new PanelRefbookItemsEditor( aParent, ctx, ISkConnectionSupplier.DEF_CONN_ID );
+    PanelRefbooksEditor panel = new PanelRefbooksEditor( aParent, ctx, ISkConnectionSupplier.DEF_CONN_ID );
     return panel;
   }
 
