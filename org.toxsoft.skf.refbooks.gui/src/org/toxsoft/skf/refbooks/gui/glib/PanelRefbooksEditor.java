@@ -6,11 +6,13 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.skf.refbooks.gui.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
@@ -76,12 +78,18 @@ public class PanelRefbooksEditor
 
     // создаем панель редактирования содержимого справочника
     CTabItem refbookContentTab = new CTabItem( refbookEditorsFolder, SWT.NONE );
-    refbookContentTab.setText( STR_N_REFBOOK_CONTENT );
+    refbookContentTab.setText( STR_REFBOOK_CONTENT );
+    refbookContentTab.setToolTipText( STR_REFBOOK_CONTENT_D );
+    refbookContentTab
+        .setImage( iconManager().loadStdIcon( ISkRefbooksGuiConstants.ICONID_REFBOOK_ITEMS_LIST, EIconSize.IS_16X16 ) );
     itemsPanel = new RefbookItemsListPanel( refbookEditorsFolder, tsContext(), getUsedConnectionId(), false );
     refbookContentTab.setControl( itemsPanel );
 
     CTabItem refbookStructTab = new CTabItem( refbookEditorsFolder, SWT.NONE );
-    refbookStructTab.setText( STR_N_REFBOOK_STRUCT );
+    refbookStructTab.setText( STR_REFBOOK_STRUCT );
+    refbookStructTab.setToolTipText( STR_REFBOOK_STRUCT_D );
+    refbookStructTab
+        .setImage( iconManager().loadStdIcon( ISkRefbooksGuiConstants.ICONID_REFBOOK_EDIT, EIconSize.IS_16X16 ) );
     // создаем панель редактирования структуры справочника
     structPanel = new RefbookStructPanel( refbookEditorsFolder, tsContext(), getUsedConnectionId() );
     refbookStructTab.setControl( structPanel );
