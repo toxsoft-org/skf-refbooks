@@ -2,14 +2,12 @@ package org.toxsoft.skf.refbooks.gui.km5;
 
 import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
 import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.ISkSdedKm5SharedResources.*;
 
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
-import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.impl.*;
@@ -63,10 +61,6 @@ class RbedDtoRefbookInfoM5LifecycleManager
 
   @Override
   protected ValidationResult doBeforeCreate( IM5Bunch<IDtoRefbookInfo> aValues ) {
-    String id = aValues.getAsAv( FID_CLASS_ID ).asString();
-    if( !StridUtils.isValidIdPath( id ) ) {
-      return ValidationResult.error( FMT_ERR_ID_NOT_IDPATH, id );
-    }
     IDtoRefbookInfo dtoRefbookInfo = makeDtoRefbookInfo( aValues );
     return refbookService().svs().validator().canDefineRefbook( dtoRefbookInfo, null );
   }
@@ -80,12 +74,8 @@ class RbedDtoRefbookInfoM5LifecycleManager
 
   @Override
   protected ValidationResult doBeforeEdit( IM5Bunch<IDtoRefbookInfo> aValues ) {
-    String id = aValues.getAsAv( FID_CLASS_ID ).asString();
-    if( !StridUtils.isValidIdPath( id ) ) {
-      return ValidationResult.error( FMT_ERR_ID_NOT_IDPATH, id );
-    }
     IDtoRefbookInfo dtoRefbookInfo = makeDtoRefbookInfo( aValues );
-    ISkRefbook skRefbook = refbookService().findRefbook( id );
+    ISkRefbook skRefbook = refbookService().findRefbook( dtoRefbookInfo.id() );
     return refbookService().svs().validator().canDefineRefbook( dtoRefbookInfo, skRefbook );
   }
 

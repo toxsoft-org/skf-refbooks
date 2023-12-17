@@ -133,6 +133,7 @@ public class RefbookStructPanel
         case CREATE:
         case EDIT:
         case LIST:
+          // TODO what to do?
         default:
           break;
       }
