@@ -23,7 +23,6 @@ Require-Bundle: javax.inject,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skf.refbooks.lib,
  org.toxsoft.core.jasperreports.gui,
- org.toxsoft.uskat.s5,
  org.toxsoft.extlibs.jasperreports
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skf.refbooks.gui

@@ -8,8 +8,11 @@ import org.toxsoft.core.tsgui.m5.gui.panels.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
@@ -21,6 +24,34 @@ import org.toxsoft.uskat.core.gui.glib.*;
  */
 public class RefbookItemsListPanel
     extends SkStdEventsProducerPanel<ISkRefbookItem> {
+
+  /**
+   * Refreshes this panel when corresponding event happens.
+   */
+  private final ISkRefbookServiceListener refbookServiceListener = new ISkRefbookServiceListener() {
+
+    @Override
+    public void onRefbookChanged( ECrudOp aOp, String aRefbookId ) {
+      switch( aOp ) {
+        case CREATE:
+          break;
+        case EDIT:
+        case REMOVE:
+        case LIST: {
+          reinitPanel();
+          break;
+        }
+        default:
+          throw new TsNotAllEnumsUsedRtException();
+      }
+    }
+
+    @Override
+    public void onRefbookItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
+      // nop
+    }
+
+  };
 
   private ISkRefbook                         refbook = null;
   private IM5CollectionPanel<ISkRefbookItem> panel   = null;
@@ -41,6 +72,8 @@ public class RefbookItemsListPanel
   public RefbookItemsListPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId, boolean aViewer ) {
     super( aParent, aContext, aUsedConnId );
     this.setLayout( new BorderLayout() );
+    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+    rbServ.eventer().addListener( refbookServiceListener );
   }
 
   /**
@@ -55,8 +88,13 @@ public class RefbookItemsListPanel
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
   public RefbookItemsListPanel( Composite aParent, ITsGuiContext aContext ) {
-    super( aParent, aContext );
-    this.setLayout( new BorderLayout() );
+    this( aParent, aContext, ISkConnectionSupplier.DEF_CONN_ID, false );
+  }
+
+  @Override
+  protected void doDispose() {
+    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+    rbServ.eventer().removeListener( refbookServiceListener );
   }
 
   // ------------------------------------------------------------------------------------
