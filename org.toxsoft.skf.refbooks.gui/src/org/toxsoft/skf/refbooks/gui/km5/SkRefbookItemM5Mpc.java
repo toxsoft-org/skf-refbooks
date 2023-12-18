@@ -19,9 +19,11 @@ import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tslib.av.impl.*;
 import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.uskat.core.api.users.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 
@@ -102,10 +104,10 @@ class SkRefbookItemM5Mpc
 
       IJasperReportConstants.REPORT_TITLE_M5_ID.setValue( printContext.params(), AvUtils.avStr( title ) );
 
-      // выясняем текущего пользователя FIXME
-      // ISkUser user = S5ConnectionUtils.getConnectedUser( connection.coreApi() );
-      // String userName = user.nmName().trim().length() > 0 ? user.nmName() : user.login();
-      String userName = "root";
+      // выясняем текущего пользователя
+      Skid userSkid = connection.coreApi().getCurrentUserInfo().userSkid();
+      ISkUser user = connection.coreApi().userService().findUser( userSkid.strid() );
+      String userName = user.nmName().trim().length() > 0 ? user.nmName() : user.login();
 
       IJasperReportConstants.LEFT_BOTTOM_STR_M5_ID.setValue( printContext.params(),
           AvUtils.avStr( AUTHOR_STR + userName ) );
