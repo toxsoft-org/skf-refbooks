@@ -133,7 +133,11 @@ public class RefbookStructPanel
         case CREATE:
         case EDIT:
         case LIST:
-          // TODO what to do?
+          // refresh panel
+          ISkRefbook sel = refbookServ().findRefbook( aRefbookId );
+          IDtoRefbookInfo dtoRefbook = DtoRefbookInfo.of( sel );
+          panel.setEntity( dtoRefbook );
+          break;
         default:
           break;
       }
