@@ -8,6 +8,8 @@ package org.toxsoft.skf.refbooks.lib.impl;
 @SuppressWarnings( "nls" )
 interface ISkResources {
 
+  // TODO L10N
+
   /**
    * {@link SkExtServiceRefbooks}
    */
@@ -23,5 +25,11 @@ interface ISkResources {
   String FMT_ERR_ITEM_NOT_EXISTS            = "Элемент с идентификатором %s не существует";
   String FMT_ERR_NO_SUCH_LINK               = "Попытка задать несуществующую связь '%s'";
   String FMT_ERR_INV_LINK                   = "Неверная связь '%s': %s";
+
+  // ------------------------------------------------------------------------------------
+  // USkat entities are defined only in English, l10n done via USkat localization service
+
+  String STR_REFBOOK_CLASS   = "Refbook";
+  String STR_REFBOOK_CLASS_D = "The refbook is collection of items with the same, refbook-specific structure";
 
 }

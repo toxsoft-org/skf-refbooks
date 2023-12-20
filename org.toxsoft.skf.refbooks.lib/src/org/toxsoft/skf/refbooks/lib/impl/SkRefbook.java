@@ -111,7 +111,7 @@ class SkRefbook
     eventBuilder.setEventGwid( Gwid.createEvent( classId(), strid(), EVID_REFBOOK_ITEM_CHANGE ) );
     fillEventWithOldValues( eventBuilder, oldItem );
     // create/edit item
-    rbServ.pauseCoreValidation();
+    rbServ.pauseCoreValidationAndEvents();
     Skid skid = new Skid( itemClassId(), aItemInfo.strid() );
     ISkRefbookItem rbItem;
     try {
@@ -119,7 +119,7 @@ class SkRefbook
       fillEventWithNewValues( eventBuilder, rbItem );
     }
     finally {
-      rbServ.resumeCoreValidation();
+      rbServ.resumeCoreValidationAndEvents();
     }
     // fire event
     ECrudOp op = oldItem != null ? ECrudOp.EDIT : ECrudOp.CREATE;
@@ -141,12 +141,12 @@ class SkRefbook
     fillEventWithOldValues( eventBuilder, oldItem );
     // remove item
     Skid skid = new Skid( itemClassId(), aItemId );
-    rs.pauseCoreValidation();
+    rs.pauseCoreValidationAndEvents();
     try {
       coreApi().objService().removeObject( skid );
     }
     finally {
-      rs.resumeCoreValidation();
+      rs.resumeCoreValidationAndEvents();
     }
     // inform on item removal event
     eventBuilder.eventParams().setValobj( EVPRMID_CRUD_OP, ECrudOp.REMOVE );

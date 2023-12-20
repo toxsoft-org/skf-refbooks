@@ -340,7 +340,10 @@ public class SkExtServiceRefbooks
    * @return {@link IDtoClassInfo} - refbook class info
    */
   private static IDtoClassInfo internalCreateRefbookClassDto() {
-    DtoClassInfo cinf = new DtoClassInfo( CLSID_REFBOOK, GW_ROOT_CLASS_ID, IOptionSet.NULL );
+    DtoClassInfo cinf = new DtoClassInfo( CLSID_REFBOOK, GW_ROOT_CLASS_ID, OptionSetUtils.createOpSet( //
+        TSID_NAME, STR_REFBOOK_CLASS_D, //
+        TSID_DESCRIPTION, STR_REFBOOK_CLASS_D //
+    ) );
     OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.setValue( cinf.params(), AV_TRUE );
     cinf.attrInfos().add( ATRINF_ITEM_CLASS_ID );
     return cinf;
@@ -350,18 +353,26 @@ public class SkExtServiceRefbooks
   // package API
   //
 
-  void pauseCoreValidation() {
+  void pauseCoreValidationAndEvents() {
     sysdescr().svs().pauseValidator( claimingValidator );
     objServ().svs().pauseValidator( claimingValidator );
     linkService().svs().pauseValidator( claimingValidator );
     clobService().svs().pauseValidator( claimingValidator );
+    sysdescr().eventer().pauseFiring();
+    objServ().eventer().pauseFiring();
+    linkService().eventer().pauseFiring();
+    clobService().eventer().pauseFiring();
   }
 
-  void resumeCoreValidation() {
+  void resumeCoreValidationAndEvents() {
     sysdescr().svs().resumeValidator( claimingValidator );
     objServ().svs().resumeValidator( claimingValidator );
     linkService().svs().resumeValidator( claimingValidator );
     clobService().svs().resumeValidator( claimingValidator );
+    sysdescr().eventer().resumeFiring( true );
+    objServ().eventer().resumeFiring( true );
+    linkService().eventer().resumeFiring( true );
+    clobService().eventer().resumeFiring( true );
   }
 
   // ------------------------------------------------------------------------------------
@@ -391,20 +402,22 @@ public class SkExtServiceRefbooks
     TsNullArgumentRtException.checkNull( aDpuRefbookInfo );
     ISkRefbook oldRb = findRefbook( aDpuRefbookInfo.id() );
     TsValidationFailedRtException.checkError( svs().validator().canDefineRefbook( aDpuRefbookInfo, oldRb ) );
-    pauseCoreValidation();
+    pauseCoreValidationAndEvents();
     ISkRefbook rb;
     try {
-      ISkSysdescr sd = coreApi().sysdescr();
-      ISkObjectService os = coreApi().objService();
       // create item class
       String itemClassId = makeItemClassIdFromRefbookId( aDpuRefbookInfo.id() );
-      DtoClassInfo itemClassInf = new DtoClassInfo( itemClassId, IGwHardConstants.GW_ROOT_CLASS_ID, IOptionSet.NULL );
+      DtoClassInfo itemClassInf = new DtoClassInfo( itemClassId, IGwHardConstants.GW_ROOT_CLASS_ID,
+          OptionSetUtils.createOpSet( //
+              TSID_NAME, aDpuRefbookInfo.nmName(), //
+              TSID_DESCRIPTION, aDpuRefbookInfo.description() //
+          ) );
       OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.setValue( itemClassInf.params(), AV_TRUE );
       itemClassInf.attrInfos().addAll( aDpuRefbookInfo.attrInfos() );
       itemClassInf.linkInfos().addAll( aDpuRefbookInfo.linkInfos() );
       itemClassInf.rivetInfos().addAll( aDpuRefbookInfo.rivetInfos() );
       itemClassInf.clobInfos().addAll( aDpuRefbookInfo.clobInfos() );
-      sd.defineClass( itemClassInf );
+      sysdescr().defineClass( itemClassInf );
       // create refbook object
       IOptionSetEdit attrs = new OptionSet();
       DDEF_NAME.setValue( attrs, avStr( aDpuRefbookInfo.nmName() ) );
@@ -412,10 +425,10 @@ public class SkExtServiceRefbooks
       attrs.setStr( ATRINF_ITEM_CLASS_ID.id(), itemClassId );
       Skid rbObjSkid = ISkRefbookServiceHardConstants.makeRefbookObjSkid( aDpuRefbookInfo.id() );
       DtoObject rbDto = new DtoObject( rbObjSkid, attrs, IStringMap.EMPTY );
-      rb = os.defineObject( rbDto );
+      rb = objServ().defineObject( rbDto );
     }
     finally {
-      resumeCoreValidation();
+      resumeCoreValidationAndEvents();
     }
     // fire event
     ECrudOp op = oldRb != null ? ECrudOp.EDIT : ECrudOp.CREATE;
@@ -427,22 +440,18 @@ public class SkExtServiceRefbooks
   public void removeRefbook( String aRefbookId ) {
     TsValidationFailedRtException.checkError( svs().validator().canRemoveRefbook( aRefbookId ) );
     ISkRefbook rb = findRefbook( aRefbookId );
-    pauseCoreValidation();
+    pauseCoreValidationAndEvents();
     try {
-      ISkSysdescr sd = coreApi().sysdescr();
-      ISkObjectService os = coreApi().objService();
       // remove all items objects
-      ISkidList toRemove = os.listSkids( rb.itemClassId(), false );
+      ISkidList toRemove = objServ().listSkids( rb.itemClassId(), false );
       for( Skid skid : toRemove ) {
-        os.removeObject( skid );
+        objServ().removeObject( skid );
       }
-      // remove item class
-      sd.removeClass( rb.itemClassId() );
-      // remove refbook object
-      os.removeObject( rb.skid() );
+      objServ().removeObject( rb.skid() );
+      sysdescr().removeClass( rb.itemClassId() );
     }
     finally {
-      resumeCoreValidation();
+      resumeCoreValidationAndEvents();
     }
     // fire event
     eventer.fireRefbookChanged( ECrudOp.REMOVE, aRefbookId );

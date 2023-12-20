@@ -38,6 +38,12 @@ public class RefbookItemsListPanel
         case EDIT:
         case REMOVE:
         case LIST: {
+          if( refbook != null ) {
+            ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+            if( rbServ.findRefbook( refbook.id() ) == null ) { // refbook was deleted
+              refbook = null;
+            }
+          }
           reinitPanel();
           break;
         }
