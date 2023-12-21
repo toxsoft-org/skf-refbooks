@@ -16,6 +16,9 @@ import org.toxsoft.uskat.core.gui.km5.*;
 
 /**
  * M5-model of {@link ISkRefbook}.
+ * <p>
+ * The LM of this model does not supports the refbook structure (attributes, rivets, links and CLOBs) editing. Use
+ * {@link RbedDtoRefbookInfoM5Model} for structural changes.
  *
  * @author hazard157
  */

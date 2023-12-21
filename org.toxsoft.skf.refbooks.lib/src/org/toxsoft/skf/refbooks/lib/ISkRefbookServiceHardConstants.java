@@ -131,8 +131,6 @@ public interface ISkRefbookServiceHardConstants {
    */
   String EVPRMID_NEW_RIVETS = "newRivets";
 
-  // FIXME add rivets old/new to the event
-
   /**
    * {@link #EVPRMID_CHANGE_AUTHOR} parameter definition.
    */

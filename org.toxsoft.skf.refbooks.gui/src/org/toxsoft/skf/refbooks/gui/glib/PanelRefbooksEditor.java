@@ -42,7 +42,7 @@ public class PanelRefbooksEditor
     extends SkPanel
     implements ISkRefbookServiceListener {
 
-  private final RefbooksListPanel               refbooksListPanel;     // left pane: refbooks list
+  private final RefbooksListPanel               refbooksListPanel;     // left pane: refbooks list editor
   private final RefbookItemsListPanel           itemsPanel;            // right tab 0: refbook items editor
   private final IInplaceEditorPanel             inplaceStructEditor;   // right tab 1: refbook structure editor
   private final IM5EntityPanel<IDtoRefbookInfo> refbookStructEditPane; // inplace editor content
@@ -72,7 +72,7 @@ public class PanelRefbooksEditor
     this.setLayout( new BorderLayout() );
     SashForm sfMain = new SashForm( this, SWT.HORIZONTAL );
     // left pane
-    refbooksListPanel = new RefbooksListPanel( sfMain, tsContext(), getUsedConnectionId(), false );
+    refbooksListPanel = new RefbooksListPanel( sfMain, tsContext(), getUsedConnectionId(), true );
     // right pane
     CTabFolder refbookEditorsFolder = new CTabFolder( sfMain, SWT.NONE );
     // tab 0: items editor
@@ -99,7 +99,7 @@ public class PanelRefbooksEditor
     refbookStructTab.setControl( inplaceStructEditor.createControl( refbookEditorsFolder ) );
     // setup
     sfMain.setWeights( 3000, 7000 );
-    refbooksListPanel.addSelectionListener( ( s, i ) -> whenRefbooksListSelectionChanges() );
+    refbooksListPanel.addTsSelectionListener( ( s, i ) -> whenRefbooksListSelectionChanges() );
     refbookService().eventer().addListener( this );
     refbookEditorsFolder.setSelection( 0 );
     inplaceStructEditor.refresh();
@@ -168,32 +168,7 @@ public class PanelRefbooksEditor
 
   @Override
   public void onRefbookItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
-    // TODO Auto-generated method stub
-
+    // nop
   }
-
-  /**
-   * Создаем новый редактор справочника и вставляем его в folder
-   *
-   * @param aSelectedItem выбранный справочник
-   */
-  // protected void addNewRefbookEditor( ISkRefbook aSelectedItem ) {
-  // // TODO перенести код в RefbookItemsListPanel
-  // ISkRefbookService skRefbookService = coreApi().getService( ISkRefbookService.SERVICE_ID );
-  // ISkRefbook skRefbook = skRefbookService.findRefbook( aSelectedItem.id() );
-  // if( skRefbook == null ) {
-  // TsDialogUtils.error( getShell(), FMT_ERR_NO_REFBOOK_BY_ID, aSelectedItem.id() );
-  // return;
-  // }
-  // IM5Model<ISkRefbookItem> model = m5().getModel( aSelectedItem.itemClassId(), ISkRefbookItem.class );
-  // // инициализация GUI
-  // ITsGuiContext ctx = new TsGuiContext( tsContext() );
-  // IM5LifecycleManager<ISkRefbookItem> lm = model.getLifecycleManager( skConn() );
-  // IM5CollectionPanel<ISkRefbookItem> panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
-  //
-  // panel.createControl( refbookEditorsFolder );
-  // // Закрепляем созданный справочник за закладкой
-  // refbookContentTab.setControl( panel.getControl() );
-  // }
 
 }

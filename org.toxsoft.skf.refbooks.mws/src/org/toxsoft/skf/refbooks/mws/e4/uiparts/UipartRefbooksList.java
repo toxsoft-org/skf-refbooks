@@ -2,16 +2,13 @@ package org.toxsoft.skf.refbooks.mws.e4.uiparts;
 
 import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
-import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
-import org.toxsoft.core.tsgui.m5.*;
-import org.toxsoft.core.tsgui.m5.gui.panels.*;
-import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.widgets.*;
-import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.skf.refbooks.gui.glib.*;
 import org.toxsoft.skf.refbooks.mws.e4.services.*;
+import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.e4.uiparts.*;
 
 /**
@@ -22,19 +19,25 @@ import org.toxsoft.uskat.core.gui.e4.uiparts.*;
 public class UipartRefbooksList
     extends SkMwsAbstractPart {
 
-  private IWsRefbooksManagementService   rbms;
-  private IM5CollectionPanel<ISkRefbook> panel;
+  private IWsRefbooksManagementService rbms;
+  private RefbooksListPanel            refbooksListPanel;
+
+  // private IM5CollectionPanel<ISkRefbook> panel;
 
   @Override
   protected void doCreateContent( TsComposite aParent ) {
     rbms = tsContext().get( IWsRefbooksManagementService.class );
-    IM5Model<ISkRefbook> model = m5().getModel( MID_KM5RB_REFBOOK, ISkRefbook.class );
-    IM5LifecycleManager<ISkRefbook> lm = model.getLifecycleManager( skConn() );
     ITsGuiContext ctx = new TsGuiContext( tsContext() );
     OPDEF_DBLCLICK_ACTION_ID.setValue( ctx.params(), AV_STR_EMPTY );
-    panel = model.panelCreator().createCollViewerPanel( ctx, lm.itemsProvider() );
-    panel.createControl( aParent );
-    panel.addTsDoubleClickListener( ( src, sel ) -> rbms.showRefbookUipart( sel ) );
+    refbooksListPanel = new RefbooksListPanel( aParent, ctx, ISkConnectionSupplier.DEF_CONN_ID, false );
+    refbooksListPanel.addTsDoubleClickListener( ( src, sel ) -> rbms.showRefbookUipart( sel ) );
+
+    // IM5Model<ISkRefbook> model = m5().getModel( MID_KM5RB_REFBOOK, ISkRefbook.class );
+    // IM5LifecycleManager<ISkRefbook> lm = model.getLifecycleManager( skConn() );
+    // ITsGuiContext ctx = new TsGuiContext( tsContext() );
+    // panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
+    // panel.createControl( aParent );
+    // panel.addTsDoubleClickListener( ( src, sel ) -> rbms.showRefbookUipart( sel ) );
   }
 
 }

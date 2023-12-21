@@ -5,6 +5,7 @@ import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
@@ -49,10 +50,6 @@ public class SkRefbookItemM5Model
       fd.addFlags( M5FF_COLUMN );
       addFieldDefs( fd );
     }
-    // TODO CLOBs
-    for( IDtoClobInfo clobIinf : rbInfo.clobInfos() ) {
-      // TODO create class KM5ClobFieldDef and use it here
-    }
     // rivets
     for( IDtoRivetInfo rivetInfo : rbInfo.rivetInfos() ) {
       M5FieldDef<ISkObject, ?> fd;
@@ -63,6 +60,11 @@ public class SkRefbookItemM5Model
         fd = new KM5MultiRivetFieldDef( rivetInfo );
       }
       fd.setFlags( M5FF_COLUMN );
+      addFieldDefs( fd );
+    }
+    // CLOBs
+    for( IDtoClobInfo clobIinf : rbInfo.clobInfos() ) {
+      IM5FieldDef<? extends ISkObject, String> fd = new KM5ClobFieldDef<>( clobIinf );
       addFieldDefs( fd );
     }
     // links

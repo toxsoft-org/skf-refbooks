@@ -1,25 +1,39 @@
 package org.toxsoft.skf.refbooks.gui.glib;
 
+import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
 
 import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
-import org.toxsoft.core.tsgui.bricks.stdevents.*;
+import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.m5.*;
+import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.skf.refbooks.gui.km5.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
 /**
  * Panel displays editable list of the refbooks.
+ * <p>
+ * This panel may be created in administrator or user modes, determined by <code>aAdminMode</code> argument of the
+ * constructor. in administrator mode create/edit/remove of refbooks are allowed. In user mode only refbook editing is
+ * allowed.
+ * <p>
+ * The panel is using {@link SkRefbookM5Model} so it does not supports the refbook structure (attributes, rivets, links
+ * and CLOBs) editing.
  *
  * @author hazard157
  */
@@ -38,24 +52,37 @@ public class RefbooksListPanel
    * @param aParent {@link Composite} - parent component
    * @param aContext {@link ITsGuiContext} - the context
    * @param aUsedConnId {@link IdChain} - ID of connection to be used
-   * @param aViewer boolean - <code>true</code> to create panel as viewer, without editing abilities
+   * @param aAdminMode boolean - <code>true</code> to allow refbook creation/removal
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public RefbooksListPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId, boolean aViewer ) {
+  public RefbooksListPanel( Composite aParent, ITsGuiContext aContext, IdChain aUsedConnId, boolean aAdminMode ) {
     super( aParent, aContext, aUsedConnId );
     this.setLayout( new BorderLayout() );
     IM5Model<ISkRefbook> model = m5().getModel( MID_KM5RB_REFBOOK, ISkRefbook.class );
     IM5LifecycleManager<ISkRefbook> lm = model.getLifecycleManager( skConn() );
+    // setup refbooks list UI depending on administrator/user mode
     ITsGuiContext ctx = new TsGuiContext( tsContext() );
-    if( aViewer ) {
-      OPDEF_IS_ACTIONS_CRUD.setValue( ctx.params(), AV_FALSE );
-      panel = model.panelCreator().createCollViewerPanel( aContext, lm.itemsProvider() );
-    }
-    else {
-      panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
-    }
+    OPDEF_IS_ACTIONS_CRUD.setValue( ctx.params(), AV_TRUE );
+    OPDEF_IS_ACTIONS_HIDE_PANES.setValue( ctx.params(), avBool( aAdminMode ) );
+    OPDEF_IS_SUMMARY_PANE.setValue( ctx.params(), avBool( aAdminMode ) );
+    OPDEF_IS_DETAILS_PANE.setValue( ctx.params(), AV_TRUE );
+    MultiPaneComponentModown<ISkRefbook> mpc = new MultiPaneComponentModown<>( ctx, model, lm.itemsProvider(), lm ) {
+
+      protected ITsToolbar doCreateToolbar( ITsGuiContext aContext1, String aName, EIconSize aIconSize,
+          IListEdit<ITsActionDef> aActs ) {
+        if( !aAdminMode ) {
+          aActs.remove( ACDEF_ADD );
+          aActs.remove( ACDEF_REMOVE );
+        }
+        return super.doCreateToolbar( aContext1, aName, aIconSize, aActs );
+      }
+    };
+    panel = new M5CollectionPanelMpcModownWrapper<>( mpc, false );
+    // create panel
     panel.createControl( this );
     panel.getControl().setLayoutData( BorderLayout.CENTER );
+    panel.addTsSelectionListener( selectionChangeEventHelper );
+    panel.addTsDoubleClickListener( doubleClickEventHelper );
   }
 
   // ------------------------------------------------------------------------------------
@@ -72,20 +99,15 @@ public class RefbooksListPanel
     panel.setSelectedItem( aItem );
   }
 
+  // ------------------------------------------------------------------------------------
+  // API
+  //
+
   /**
    * refresh panel content
    */
   public void refresh() {
     panel.refresh();
-  }
-
-  /**
-   * Add refbook list selection change listener
-   *
-   * @param aListener selection change listener
-   */
-  public void addSelectionListener( ITsSelectionChangeListener<ISkRefbook> aListener ) {
-    panel.addTsSelectionListener( aListener );
   }
 
 }

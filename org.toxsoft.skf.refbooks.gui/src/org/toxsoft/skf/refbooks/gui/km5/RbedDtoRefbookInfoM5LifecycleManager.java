@@ -38,6 +38,7 @@ class RbedDtoRefbookInfoM5LifecycleManager
   // ------------------------------------------------------------------------------------
   // implementation
   //
+
   private ISkRefbookService refbookService() {
     return master().coreApi().getService( ISkRefbookService.SERVICE_ID );
   }

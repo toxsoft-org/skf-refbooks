@@ -10,7 +10,6 @@ import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.skf.refbooks.lib.*;
-import org.toxsoft.uskat.core.gui.km5.sded.sded.*;
 
 /**
  * Panel creator for {@link RbedDtoRefbookInfoM5Model}.

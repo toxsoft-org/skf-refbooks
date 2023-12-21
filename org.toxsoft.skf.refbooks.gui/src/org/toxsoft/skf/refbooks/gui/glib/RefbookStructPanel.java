@@ -23,6 +23,9 @@ import org.toxsoft.uskat.core.gui.glib.*;
 
 /**
  * Panel to edit specified refbook structure as described by {@link IDtoRefbookInfo}.
+ * <p>
+ * Panel is not used by {@link PanelRefbooksEditor}, it is designed to be used when application needs to edit the
+ * specific refbook.
  *
  * @author hazard157
  * @author dima
@@ -32,10 +35,6 @@ public class RefbookStructPanel
     implements ISkRefbookServiceListener {
 
   private final IM5EntityPanel<IDtoRefbookInfo> panel;
-
-  /**
-   * TODO listen to the refbook service and update structure when not SELF editing refbook<br>
-   */
 
   private String refbookId = null;
 

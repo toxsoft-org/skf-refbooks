@@ -36,44 +36,31 @@ class SkRefbook
   //
 
   private void fillEventWithOldValues( SkEventBuilder aEventBuilder, ISkRefbookItem aItem ) {
-    if( aItem != null ) {
-      aEventBuilder.eventParams().setValobj( EVPRMID_OLD_ATTRS, aItem.attrs() );
-      MappedSkids slMap = new MappedSkids();
-      ISkClassInfo itemClassInfo = coreApi().sysdescr().getClassInfo( itemClassId() );
-      for( String lid : itemClassInfo.links().list().ids() ) {
-        SkidList skList = new SkidList();
-
-        // TODO почему REVERSE ???
-
-        skList.addAll( aItem.getLinkRevSkids( itemClassId(), lid ) );
-        slMap.map().put( lid, skList );
-
-        // FIXME rivets
-
-      }
-      aEventBuilder.eventParams().setValobj( EVPRMID_OLD_LINKS, slMap );
+    if( aItem == null ) {
+      return;
     }
+    aEventBuilder.eventParams().setValobj( EVPRMID_OLD_ATTRS, aItem.attrs() );
+    aEventBuilder.eventParams().setValobj( EVPRMID_OLD_RIVETS, aItem.rivets() );
+    MappedSkids linksMap = new MappedSkids();
+    ISkClassInfo itemClassInfo = coreApi().sysdescr().getClassInfo( itemClassId() );
+    for( String lid : itemClassInfo.links().list().ids() ) {
+      linksMap.map().put( lid, aItem.getLinkSkids( lid ) );
+    }
+    aEventBuilder.eventParams().setValobj( EVPRMID_OLD_LINKS, linksMap );
   }
 
   private void fillEventWithNewValues( SkEventBuilder aEventBuilder, ISkRefbookItem aItem ) {
-    if( aItem != null ) {
-      aEventBuilder.eventParams().setValobj( EVPRMID_NEW_ATTRS, aItem.attrs() );
-      MappedSkids slMap = new MappedSkids();
-      ISkSysdescr cim = coreApi().sysdescr();
-      ISkClassInfo itemClassInfo = cim.getClassInfo( itemClassId() );
-      for( String lid : itemClassInfo.links().list().ids() ) {
-        SkidList skList = new SkidList();
-
-        // TODO почему REVERSE ???
-
-        skList.addAll( aItem.getLinkRevSkids( itemClassId(), lid ) );
-        slMap.map().put( lid, skList );
-
-        // FIXME rivets
-
-      }
-      aEventBuilder.eventParams().setValobj( EVPRMID_NEW_LINKS, slMap );
+    if( aItem == null ) {
+      return;
     }
+    aEventBuilder.eventParams().setValobj( EVPRMID_NEW_ATTRS, aItem.attrs() );
+    aEventBuilder.eventParams().setValobj( EVPRMID_NEW_RIVETS, aItem.rivets() );
+    MappedSkids linksMap = new MappedSkids();
+    ISkClassInfo itemClassInfo = coreApi().sysdescr().getClassInfo( itemClassId() );
+    for( String lid : itemClassInfo.links().list().ids() ) {
+      linksMap.map().put( lid, aItem.getLinkSkids( lid ) );
+    }
+    aEventBuilder.eventParams().setValobj( EVPRMID_NEW_LINKS, linksMap );
   }
 
   // ------------------------------------------------------------------------------------

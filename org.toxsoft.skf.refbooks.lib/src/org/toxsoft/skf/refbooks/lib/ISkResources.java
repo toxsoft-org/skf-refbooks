@@ -8,13 +8,11 @@ package org.toxsoft.skf.refbooks.lib;
 @SuppressWarnings( "nls" )
 interface ISkResources {
 
-  // TODO L10N
+  // ------------------------------------------------------------------------------------
+  // USkat entities are defined only in English, l10n done via USkat localization service
 
-  /**
-   * {@link ISkRefbookServiceHardConstants}
-   */
-  String STR_N_ITEM_CLASS_ID       = "Класс элемента";
-  String STR_D_ITEM_CLASS_ID       = "Идентификатор класса элемента справочника";
+  String STR_N_ITEM_CLASS_ID       = "Item class";
+  String STR_D_ITEM_CLASS_ID       = "Refbook item class ID";
   String STR_N_REFBOOK_ITEM_CHANGE = "RB item";
   String STR_D_REFBOOK_ITEM_CHANGE = "Refbook item changed";
   String STR_N_CHANGE_AUTHOR       = "Author";

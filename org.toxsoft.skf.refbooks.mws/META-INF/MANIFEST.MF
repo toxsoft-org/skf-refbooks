@@ -7,6 +7,7 @@ Bundle-Activator: org.toxsoft.skf.refbooks.mws.Activator
 Bundle-Vendor: toxsoft.org
 Export-Package: org.toxsoft.skf.refbooks.mws,
  org.toxsoft.skf.refbooks.mws.e4.addons,
+ org.toxsoft.skf.refbooks.mws.e4.services,
  org.toxsoft.skf.refbooks.mws.e4.uiparts
 Require-Bundle: javax.annotation,
  javax.inject,

@@ -62,15 +62,11 @@ class SkRefbookItemM5Mpc
       IM5ItemsProvider<ISkRefbookItem> aItemsProvider, IM5LifecycleManager<ISkRefbookItem> aLifecycleManager ) {
     super( aContext, aModel, aItemsProvider, aLifecycleManager );
     skRefbook = aRefbook;
-    // TODO повесить на double click что-то полезное
-    // IMultiPaneComponentConstants.OPDEF_DBLCLICK_ACTION_ID.setValue( tsContext().params(),
-    // avStr( ACTID_PRINT_REFBOOK ) );
   }
 
   @Override
   protected ITsToolbar doCreateToolbar( ITsGuiContext aContext, String aName, EIconSize aIconSize,
       IListEdit<ITsActionDef> aActs ) {
-    // добавляем кнопку печати
     aActs.add( ACDEF_SEPARATOR );
     aActs.add( ACDEF_PRINT_REFBOOK );
     return super.doCreateToolbar( aContext, aName, aIconSize, aActs );
