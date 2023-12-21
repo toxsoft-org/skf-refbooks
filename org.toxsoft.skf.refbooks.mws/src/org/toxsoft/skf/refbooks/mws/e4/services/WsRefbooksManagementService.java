@@ -5,11 +5,15 @@ import static org.toxsoft.skf.refbooks.mws.IWsRefooksConstants.*;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.mws.e4.helpers.partman.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.mws.*;
 import org.toxsoft.skf.refbooks.mws.e4.uiparts.*;
+import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.utils.*;
@@ -23,6 +27,19 @@ public class WsRefbooksManagementService
     implements IWsRefbooksManagementService, ITsGuiContextable, ISkConnected {
 
   private static final String UIPART_PID_PREFIX = WS_RB_FULL_ID + ".refbook_uipart"; //$NON-NLS-1$
+
+  private final ISkRefbookServiceListener refbookServiceListener = new ISkRefbookServiceListener() {
+
+    @Override
+    public void onRefbookItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
+      // nop
+    }
+
+    @Override
+    public void onRefbookChanged( ECrudOp aOp, String aRefbookId ) {
+      refreshOpenUiparts();
+    }
+  };
 
   private final ITsGuiContext         tsContext;
   private final ISkConnectionSupplier skConnSupplier;
@@ -38,14 +55,71 @@ public class WsRefbooksManagementService
     tsContext = TsNullArgumentRtException.checkNull( aContext );
     skConnSupplier = tsContext.get( ISkConnectionSupplier.class );
     psMan = new TsPartStackManager( tsContext.eclipseContext(), PARTSTACKID_REFBOOKS_MAIN );
+    if( skConn().state().isActive() ) {
+      whenConnInit();
+    }
+    skConn().addConnectionListener( ( aSource, aOldState ) -> {
+      if( aSource.state().isActive() && !aOldState.isActive() ) {
+        whenConnInit();
+        return;
+      }
+      if( !aSource.state().isOpen() ) {
+        psMan.closeAll();
+        whenConnClose();
+        return;
+      }
+    } );
   }
 
   // ------------------------------------------------------------------------------------
   // implementation
   //
 
-  private static String makeUipartIdFromGwpObjId( String aRefbookId ) {
+  private static String makeUipartIdFromRefbookId( String aRefbookId ) {
     return StridUtils.makeIdPath( UIPART_PID_PREFIX, aRefbookId );
+  }
+
+  private static String makeRefbookIdFromUipartId( String aUipartId ) {
+    return StridUtils.removeStartingIdPath( aUipartId, UIPART_PID_PREFIX );
+  }
+
+  private void whenConnInit() {
+    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+    rbServ.eventer().addListener( refbookServiceListener );
+  }
+
+  private void whenConnClose() {
+    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+    rbServ.eventer().removeListener( refbookServiceListener );
+  }
+
+  /**
+   * refreshes open UIparts - close non-existing refbooks and refreshes tabs of open UIparts.
+   */
+  private void refreshOpenUiparts() {
+    if( !skConn().state().isOpen() ) { // close all refbook's UIparts
+      psMan.closeAll();
+      return;
+    }
+    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
+    IStridablesList<ISkRefbook> refbooksList = rbServ.listRefbooks();
+    // close removed refbooks UIparts
+    for( String partId : psMan.listManagedParts().keys() ) {
+      String refbookId = makeRefbookIdFromUipartId( partId );
+      if( !refbooksList.hasKey( refbookId ) ) {
+        psMan.closePart( partId );
+      }
+    }
+    // update opened refbook UIparts headers, content is update somewhere else
+    for( ISkRefbook rb : refbooksList ) {
+      String refbookId = rb.id();
+      String partId = makeUipartIdFromRefbookId( refbookId );
+      MPart part = psMan.findPart( partId );
+      if( part != null ) {
+        part.setLabel( rb.nmName() );
+        part.setTooltip( rb.description() );
+      }
+    }
   }
 
   // ------------------------------------------------------------------------------------
@@ -77,7 +151,7 @@ public class WsRefbooksManagementService
     // it is necessary to switch to destination perspective, because parts are always created in current perspective
     e4Helper().switchToPerspective( PERSPID_WS_RB_MAIN, null );
     // activate part if already exists
-    String uipartId = makeUipartIdFromGwpObjId( aRefbook.id() );
+    String uipartId = makeUipartIdFromRefbookId( aRefbook.id() );
     MPart foundPart = psMan.findPart( uipartId );
     if( foundPart != null ) {
       e4Helper().switchToPerspective( PERSPID_WS_RB_MAIN, uipartId );
