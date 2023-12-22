@@ -341,7 +341,7 @@ public class SkExtServiceRefbooks
    */
   private static IDtoClassInfo internalCreateRefbookClassDto() {
     DtoClassInfo cinf = new DtoClassInfo( CLSID_REFBOOK, GW_ROOT_CLASS_ID, OptionSetUtils.createOpSet( //
-        TSID_NAME, STR_REFBOOK_CLASS_D, //
+        TSID_NAME, STR_REFBOOK_CLASS, //
         TSID_DESCRIPTION, STR_REFBOOK_CLASS_D //
     ) );
     OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.setValue( cinf.params(), AV_TRUE );
