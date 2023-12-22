@@ -9,6 +9,8 @@ import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
+import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.mws.*;
@@ -63,11 +65,6 @@ public class WsRefbooksManagementService
         whenConnInit();
         return;
       }
-      if( !aSource.state().isOpen() ) {
-        psMan.closeAll();
-        whenConnClose();
-        return;
-      }
     } );
   }
 
@@ -88,11 +85,6 @@ public class WsRefbooksManagementService
     rbServ.eventer().addListener( refbookServiceListener );
   }
 
-  private void whenConnClose() {
-    ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
-    rbServ.eventer().removeListener( refbookServiceListener );
-  }
-
   /**
    * refreshes open UIparts - close non-existing refbooks and refreshes tabs of open UIparts.
    */
@@ -104,11 +96,15 @@ public class WsRefbooksManagementService
     ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
     IStridablesList<ISkRefbook> refbooksList = rbServ.listRefbooks();
     // close removed refbooks UIparts
+    IStringListEdit idsToClose = new StringArrayList();
     for( String partId : psMan.listManagedParts().keys() ) {
       String refbookId = makeRefbookIdFromUipartId( partId );
       if( !refbooksList.hasKey( refbookId ) ) {
-        psMan.closePart( partId );
+        idsToClose.add( partId );
       }
+    }
+    for( String partId : idsToClose ) {
+      psMan.closePart( partId );
     }
     // update opened refbook UIparts headers, content is update somewhere else
     for( ISkRefbook rb : refbooksList ) {

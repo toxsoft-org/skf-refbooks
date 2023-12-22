@@ -108,6 +108,9 @@ public class RefbookItemsListPanel
   //
 
   private void reinitPanel() {
+    if( isDisposed() ) {
+      return;
+    }
     this.setLayoutDeferred( true );
     try {
       if( panel != null ) {
