@@ -7,7 +7,6 @@ import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
-import org.toxsoft.skf.refbooks.lib.impl.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.km5.*;
 
@@ -41,9 +40,6 @@ public class KM5RefbooksContributor
 
   @Override
   protected IStringList papiCreateModels() {
-    if( !coreApi().services().hasKey( ISkRefbookService.SERVICE_ID ) ) {
-      coreApi().addService( SkExtServiceRefbooks.CREATOR );
-    }
     IStringListEdit mids = new StringArrayList();
     // refbook objects model
     M5Model<ISkRefbook> rbModel = new SkRefbookM5Model( skConn() );
