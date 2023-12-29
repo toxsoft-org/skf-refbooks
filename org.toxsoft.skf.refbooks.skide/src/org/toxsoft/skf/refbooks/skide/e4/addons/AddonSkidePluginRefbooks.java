@@ -4,12 +4,10 @@ import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skf.refbooks.gui.*;
-import org.toxsoft.skf.refbooks.lib.impl.*;
 import org.toxsoft.skf.refbooks.skide.*;
 import org.toxsoft.skf.refbooks.skide.Activator;
 import org.toxsoft.skf.refbooks.skide.main.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.uskat.core.impl.*;
 
 /**
  * Plugin addon.
@@ -24,7 +22,6 @@ public class AddonSkidePluginRefbooks
    */
   public AddonSkidePluginRefbooks() {
     super( Activator.PLUGIN_ID );
-    SkCoreUtils.registerSkServiceCreator( SkExtServiceRefbooks.CREATOR );
   }
 
   // ------------------------------------------------------------------------------------
