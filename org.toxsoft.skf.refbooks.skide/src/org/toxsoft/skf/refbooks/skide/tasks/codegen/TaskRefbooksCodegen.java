@@ -3,9 +3,11 @@ package org.toxsoft.skf.refbooks.skide.tasks.codegen;
 import java.util.concurrent.*;
 
 import org.toxsoft.core.tslib.bricks.ctx.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.skide.main.*;
+import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.task.codegen.main.*;
 
 /**
@@ -14,13 +16,16 @@ import org.toxsoft.skide.task.codegen.main.*;
  * @author hazard157
  */
 public class TaskRefbooksCodegen
-    extends AbstractGenericTask {
+    extends AbstractSkideUnitTask {
 
   /**
    * Constructor.
+   *
+   * @param aOwnerUnit {@link AbstractSkideUnit} - the owner unit
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public TaskRefbooksCodegen() {
-    super( SkideTaskCodegenInfo.INSTANCE );
+  public TaskRefbooksCodegen( AbstractSkideUnit aOwnerUnit ) {
+    super( aOwnerUnit, SkideTaskCodegenInfo.INSTANCE, IStridablesList.EMPTY );
   }
 
   // ------------------------------------------------------------------------------------

@@ -8,7 +8,6 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.skide.tasks.codegen.*;
@@ -43,8 +42,8 @@ public class SkideUnitRefbooks
   }
 
   @Override
-  protected void doFillTasks( IStringMapEdit<IGenericTask> aTaskRunnersMap ) {
-    IGenericTask task = new TaskRefbooksCodegen();
+  protected void doFillTasks( IStringMapEdit<AbstractSkideUnitTask> aTaskRunnersMap ) {
+    AbstractSkideUnitTask task = new TaskRefbooksCodegen( this );
     aTaskRunnersMap.put( task.taskInfo().id(), task );
   }
 
