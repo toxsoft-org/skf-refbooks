@@ -13,6 +13,7 @@ import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.skide.tasks.codegen.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * SkiDE unit: view and edit {@link ISkRefbookService} content.

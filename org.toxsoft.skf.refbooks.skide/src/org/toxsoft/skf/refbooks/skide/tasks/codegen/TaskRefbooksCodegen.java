@@ -19,6 +19,7 @@ import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.skide.main.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.main.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
