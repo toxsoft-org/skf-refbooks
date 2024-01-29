@@ -267,7 +267,7 @@ public interface ISkRefbookServiceHardConstants {
   /**
    * Determines if argument may be refbook item class ID.
    * <p>
-   * Performs only syntaxic check of ID.
+   * Performs only syntactic check of ID.
    *
    * @param aClassId String - ID to be checked
    * @return boolean <code>true</code> - if argument may be refbook item ID

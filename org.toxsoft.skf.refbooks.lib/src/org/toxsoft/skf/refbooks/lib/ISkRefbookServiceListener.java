@@ -12,7 +12,7 @@ import org.toxsoft.uskat.core.api.evserv.*;
 public interface ISkRefbookServiceListener {
 
   /**
-   * Informs ablut changes in refbooks list (not changed in items).
+   * Informs about changes in refbooks list (not changed of the items in refbook).
    *
    * @param aOp {@link ECrudOp} - the kind of changes
    * @param aRefbookId String - identifier of the changed refbook or <code>null</code> on batch changes

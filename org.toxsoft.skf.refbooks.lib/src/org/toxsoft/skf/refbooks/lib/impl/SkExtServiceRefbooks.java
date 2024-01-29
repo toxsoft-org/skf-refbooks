@@ -116,17 +116,17 @@ public class SkExtServiceRefbooks
       doFireRefbookChanged( aOp, aRefbookId );
     }
 
-    public void fireItemsChanged( String aRefbookId, IList<SkEvent> aEvent ) {
+    public void fireItemsChanged( String aRefbookId, IList<SkEvent> aEvents ) {
       if( isFiringPaused() ) {
         IListEdit<SkEvent> events = refbooksChangedItems.findByKey( aRefbookId );
         if( events == null ) {
           events = new ElemArrayList<>();
           refbooksChangedItems.put( aRefbookId, events );
         }
-        events.addAll( aEvent );
+        events.addAll( aEvents );
         return;
       }
-      doFireItemsChanged( aRefbookId, aEvent );
+      doFireItemsChanged( aRefbookId, aEvents );
     }
 
   }
