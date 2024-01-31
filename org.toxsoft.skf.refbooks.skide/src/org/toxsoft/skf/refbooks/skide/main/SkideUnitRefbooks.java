@@ -5,6 +5,7 @@ import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skf.refbooks.skide.ISkidePluginRefbooksConstants.*;
 import static org.toxsoft.skf.refbooks.skide.ISkidePluginRefbooksSharedResources.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.api.ucateg.ISkideUnitCategoryConstants.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
@@ -32,6 +33,7 @@ public class SkideUnitRefbooks
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_SKIDE_REFBOOKS, //
         TSID_DESCRIPTION, STR_SKIDE_REFBOOKS_D, //
+        OPDEF_SKIDE_UNIT_CATEGORY, UCATEGID_SYSDESCR, //
         TSID_ICON_ID, ICONID_SKIDE_PLUGIN_REFBOOKS //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
