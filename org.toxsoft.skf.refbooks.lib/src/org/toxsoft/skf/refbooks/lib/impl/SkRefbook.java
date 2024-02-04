@@ -5,11 +5,13 @@ import static org.toxsoft.skf.refbooks.lib.ISkRefbookServiceHardConstants.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.impl.*;
+import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.gw.gwid.*;
 import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.uskat.core.api.evserv.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.impl.*;
@@ -139,6 +141,37 @@ class SkRefbook
     eventBuilder.eventParams().setValobj( EVPRMID_CRUD_OP, ECrudOp.REMOVE );
     eventBuilder.eventParams().setValobj( EVPRMID_ITEM_SKID, skid );
     rs.eventer.fireItemsChanged( strid(), new SingleItemList<>( eventBuilder.getEvent() ) );
+  }
+
+  @Override
+  public void removeAllItems() {
+    IStridablesList<ISkRefbookItem> items = listItems();
+    // check preconditions
+    SkExtServiceRefbooks rs = (SkExtServiceRefbooks)coreApi().services().getByKey( ISkRefbookService.SERVICE_ID );
+    for( ISkRefbookItem rbi : items ) {
+      TsValidationFailedRtException.checkError( rs.svs().validator().canRemoveItem( this, rbi.id() ) );
+    }
+    IListEdit<SkEvent> events = new ElemArrayList<>( items.size() );
+    rs.pauseCoreValidationAndEvents();
+    try {
+      // remove item one by one
+      for( ISkRefbookItem rbi : items ) {
+        SkEventBuilder eventBuilder = new SkEventBuilder();
+        eventBuilder.setEventGwid( Gwid.createEvent( classId(), strid(), EVID_REFBOOK_ITEM_CHANGE ) );
+        fillEventWithOldValues( eventBuilder, rbi );
+        Skid skid = new Skid( itemClassId(), rbi.id() );
+        eventBuilder.eventParams().setValobj( EVPRMID_CRUD_OP, ECrudOp.REMOVE );
+        eventBuilder.eventParams().setValobj( EVPRMID_ITEM_SKID, skid );
+        // remove item
+        coreApi().objService().removeObject( skid );
+        events.add( eventBuilder.getEvent() );
+      }
+      // fire removal events at once
+      rs.eventer.fireItemsChanged( strid(), events );
+    }
+    finally {
+      rs.resumeCoreValidationAndEvents();
+    }
   }
 
 }

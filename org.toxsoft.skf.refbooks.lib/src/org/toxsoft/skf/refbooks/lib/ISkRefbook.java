@@ -78,4 +78,8 @@ public interface ISkRefbook
    */
   void removeItem( String aItemId );
 
+  /**
+   * Removes all items from the refbook.
+   */
+  void removeAllItems();
 }

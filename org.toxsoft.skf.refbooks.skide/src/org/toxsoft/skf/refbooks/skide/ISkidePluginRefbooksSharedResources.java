@@ -2,6 +2,7 @@ package org.toxsoft.skf.refbooks.skide;
 
 import org.toxsoft.skf.refbooks.skide.main.*;
 import org.toxsoft.skf.refbooks.skide.tasks.codegen.*;
+import org.toxsoft.skf.refbooks.skide.tasks.upload.*;
 
 /**
  * Localizable resources.
@@ -33,5 +34,10 @@ public interface ISkidePluginRefbooksSharedResources {
    * {@link TaskRefbooksCodegen}
    */
   String FMT_INFO_JAVA_INTERFACE_WAS_GENERATED = Messages.getString( "FMT_INFO_JAVA_INTERFACE_WAS_GENERATED" ); //$NON-NLS-1$
+
+  /**
+   * {@link TaskRefbooksUpload}
+   */
+  String FMT_INFO_REFBOOKS_UPLOADED = Messages.getString( "FMT_INFO_REFBOOKS_UPLOADED" ); //$NON-NLS-1$
 
 }

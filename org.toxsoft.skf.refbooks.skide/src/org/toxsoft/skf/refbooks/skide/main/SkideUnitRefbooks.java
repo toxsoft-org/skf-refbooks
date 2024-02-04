@@ -12,6 +12,7 @@ import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.skf.refbooks.skide.tasks.codegen.*;
+import org.toxsoft.skf.refbooks.skide.tasks.upload.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
@@ -47,6 +48,8 @@ public class SkideUnitRefbooks
   @Override
   protected void doFillTasks( IStringMapEdit<AbstractSkideUnitTask> aTaskRunnersMap ) {
     AbstractSkideUnitTask task = new TaskRefbooksCodegen( this );
+    aTaskRunnersMap.put( task.taskInfo().id(), task );
+    task = new TaskRefbooksUpload( this );
     aTaskRunnersMap.put( task.taskInfo().id(), task );
   }
 
