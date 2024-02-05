@@ -46,7 +46,7 @@ public class TaskRefbooksUpload
    */
   public TaskRefbooksUpload( AbstractSkideUnit aOwnerUnit ) {
     super( aOwnerUnit, UploadToServerTaskProcessor.INSTANCE.taskInfo(), //
-        new StridablesList<>( /* No inOps */ ) );
+        new StridablesList<>( /* No cfg ops */ ) );
   }
 
   // ------------------------------------------------------------------------------------

@@ -29,6 +29,8 @@ public interface ISkidePluginRefbooksSharedResources {
    */
   String STR_OPDEF_GW_REFBOOKS_INTERFACE_NAME   = Messages.getString( "STR_OPDEF_GW_REFBOOKS_INTERFACE_NAME" );   //$NON-NLS-1$
   String STR_OPDEF_GW_REFBOOKS_INTERFACE_NAME_D = Messages.getString( "STR_OPDEF_GW_REFBOOKS_INTERFACE_NAME_D" ); //$NON-NLS-1$
+  String STR_OPDEF_GW_IS_ITEMS_INCLUDED         = Messages.getString( "STR_OPDEF_GW_IS_ITEMS_INCLUDED" );         //$NON-NLS-1$
+  String STR_OPDEF_GW_IS_ITEMS_INCLUDED_D       = Messages.getString( "STR_OPDEF_GW_IS_ITEMS_INCLUDED_D" );       //$NON-NLS-1$
 
   /**
    * {@link TaskRefbooksCodegen}

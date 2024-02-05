@@ -55,7 +55,7 @@ public class TaskRefbooksCodegen
    */
   public TaskRefbooksCodegen( AbstractSkideUnit aOwnerUnit ) {
     super( aOwnerUnit, CodegenTaskProcessor.INSTANCE.taskInfo(),
-        new StridablesList<>( OPDEF_GW_REFBOOKS_INTERFACE_NAME ) );
+        new StridablesList<>( OPDEF_GW_REFBOOKS_INTERFACE_NAME, OPDEF_GW_IS_ITEMS_INCLUDED ) );
   }
 
   // ------------------------------------------------------------------------------------
@@ -98,7 +98,8 @@ public class TaskRefbooksCodegen
   protected void doRunSync( ITsContextRo aInput, ITsContext aOutput ) {
     ILongOpProgressCallback lop = REFDEF_IN_PROGRESS_MONITOR.getRef( aInput );
     ICodegenEnvironment codegenEnv = REFDEF_CODEGEN_ENV.getRef( aInput );
-    String interfaceName = OPDEF_GW_REFBOOKS_INTERFACE_NAME.getValue( aInput.params() ).asString();
+    String interfaceName = OPDEF_GW_REFBOOKS_INTERFACE_NAME.getValue( getCfgOptionValues() ).asString();
+    boolean isItemsIncluded = OPDEF_GW_IS_ITEMS_INCLUDED.getValue( getCfgOptionValues() ).asBool();
     IJavaConstantsInterfaceWriter jw = codegenEnv.createJavaInterfaceWriter( interfaceName );
     ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
     ISkRefbookService rbServ = cs.defConn().coreApi().getService( ISkRefbookService.SERVICE_ID );
@@ -110,7 +111,9 @@ public class TaskRefbooksCodegen
       jw.addConstString( cn, rb.id(), EMPTY_STRING );
       // refbook structure and items
       writeRefbookStruct( rb, jw );
-      writeRefbookItems( rb, jw );
+      if( isItemsIncluded ) {
+        writeRefbookItems( rb, jw );
+      }
       jw.addSeparatorLine();
     }
     jw.writeFile();
