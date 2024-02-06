@@ -1,8 +1,10 @@
 package org.toxsoft.skf.refbooks.gui.km5;
 
 import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
+import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skf.refbooks.gui.km5.ISkResources.*;
+import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
 import java.text.*;
 import java.util.*;
@@ -12,10 +14,13 @@ import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.dialogs.*;
+import org.toxsoft.core.tsgui.dialogs.datarec.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.m5.*;
+import org.toxsoft.core.tsgui.m5.gui.*;
 import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tslib.av.impl.*;
 import org.toxsoft.core.tslib.coll.*;
@@ -46,7 +51,7 @@ class SkRefbookItemM5Mpc
   /**
    * Сам справочник
    */
-  final ISkRefbook skRefbook;
+  private final ISkRefbook skRefbook;
 
   private static final DateFormat printTimeFmt = new SimpleDateFormat( timeFormatString );
 
@@ -67,6 +72,8 @@ class SkRefbookItemM5Mpc
   @Override
   protected ITsToolbar doCreateToolbar( ITsGuiContext aContext, String aName, EIconSize aIconSize,
       IListEdit<ITsActionDef> aActs ) {
+    int index = 1 + aActs.indexOf( ACDEF_ADD );
+    aActs.insert( index, ACDEF_ADD_COPY );
     aActs.add( ACDEF_SEPARATOR );
     aActs.add( ACDEF_PRINT_REFBOOK );
     return super.doCreateToolbar( aContext, aName, aIconSize, aActs );
@@ -74,7 +81,24 @@ class SkRefbookItemM5Mpc
 
   @Override
   protected void doProcessAction( String aActionId ) {
+    ISkRefbookItem sel = selectedItem();
     switch( aActionId ) {
+      case ACTID_ADD_COPY: {
+        if( sel == null ) {
+          break;
+        }
+        ITsDialogInfo cdi = doCreateDialogInfoToAddItem();
+        IM5BunchEdit<ISkRefbookItem> initVals = new M5BunchEdit<>( model() );
+        initVals.fillFrom( sel, false );
+        String itemId = initVals.getAsAv( AID_STRID ).asString();
+        itemId = itemId + "_copy"; //$NON-NLS-1$
+        initVals.set( AID_STRID, avStr( itemId ) );
+        ISkRefbookItem item = M5GuiUtils.askCreate( tsContext(), model(), initVals, cdi, lifecycleManager() );
+        if( item != null ) {
+          fillViewer( item );
+        }
+        break;
+      }
       case ACTID_PRINT_REFBOOK: {
         printRefbook();
         break;
@@ -86,7 +110,8 @@ class SkRefbookItemM5Mpc
 
   @Override
   protected void doUpdateActionsState( boolean aIsAlive, boolean aIsSel, ISkRefbookItem aSel ) {
-    toolbar().setActionEnabled( ACTID_PRINT_REFBOOK, true );
+    toolbar().setActionEnabled( ACTID_ADD_COPY, aIsSel );
+    toolbar().setActionEnabled( ACTID_PRINT_REFBOOK, aIsAlive );
   }
 
   private void printRefbook() {
