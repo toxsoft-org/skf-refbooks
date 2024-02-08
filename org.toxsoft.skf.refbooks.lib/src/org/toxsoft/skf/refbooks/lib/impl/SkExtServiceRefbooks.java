@@ -206,8 +206,8 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbook rb : rbs ) {
         if( rb.nmName().equals( aRefbookInfo.nmName() ) && // новое имя уже встречается?
-            (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый
-                                                                                     // справочник
+        (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый
+                                                                                 // справочник
         {
           vr = ValidationResult.warn( FMT_WARN_RB_NAME_ALREADY_EXISTS, aRefbookInfo.nmName() );
         }
@@ -237,7 +237,7 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbookItem item : items ) {
         if( item.nmName().equals( aItemInfo.nmName() ) && // новое имя уже встречается?
-            (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
+        (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
         {
           vr = ValidationResult.warn( FMT_WARN_ITEM_NAME_ALREADY_EXISTS, aItemInfo.nmName() );
         }
@@ -249,7 +249,7 @@ public class SkExtServiceRefbooks
         if( linf == null ) {
           return ValidationResult.error( FMT_ERR_NO_SUCH_LINK, lid );
         }
-        ValidationResult lvr = linf.linkConstraint().checkErrorSize( aItemInfo.links().map().getByKey( lid ) );
+        ValidationResult lvr = linf.linkConstraint().validateErrorSize( aItemInfo.links().map().getByKey( lid ) );
         switch( lvr.type() ) {
           case OK: {
             break;
