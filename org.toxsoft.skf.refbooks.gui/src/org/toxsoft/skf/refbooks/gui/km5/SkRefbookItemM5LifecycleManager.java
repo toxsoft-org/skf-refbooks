@@ -29,7 +29,7 @@ import org.toxsoft.uskat.core.impl.dto.*;
  * @author dima
  */
 public class SkRefbookItemM5LifecycleManager
-    extends KM5LifecycleManagerBasic<ISkRefbookItem, ISkConnection> {
+    extends KM5LifecycleManagerBasic<ISkRefbookItem> {
 
   /**
    * Constructor.

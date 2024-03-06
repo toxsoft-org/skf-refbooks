@@ -23,7 +23,7 @@ import org.toxsoft.uskat.core.gui.km5.*;
  * @author hazard157
  */
 public class SkRefbookM5LifecycleManager
-    extends KM5LifecycleManagerBasic<ISkRefbook, ISkConnection> {
+    extends KM5LifecycleManagerBasic<ISkRefbook> {
 
   /**
    * Constructor.
