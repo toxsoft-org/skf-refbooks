@@ -161,8 +161,8 @@ public class WsRefbooksManagementService
     partInfo.setContributionUri( Activator.PLUGIN_ID, UipartRefbookItemsEditor.class );
     MPart newPart = psMan.createPart( partInfo );
     // set part to display specified refbook
-    UipartRefbookItemsEditor uipartBrowser = (UipartRefbookItemsEditor)newPart.getObject();
-    uipartBrowser.setRefbook( aRefbook );
+    UipartRefbookItemsEditor uipart = (UipartRefbookItemsEditor)newPart.getObject();
+    uipart.setRefbook( aRefbook );
   }
 
 }
