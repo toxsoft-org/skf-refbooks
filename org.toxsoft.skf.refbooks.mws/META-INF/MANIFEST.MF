@@ -9,8 +9,8 @@ Export-Package: org.toxsoft.skf.refbooks.mws,
  org.toxsoft.skf.refbooks.mws.e4.addons,
  org.toxsoft.skf.refbooks.mws.e4.services,
  org.toxsoft.skf.refbooks.mws.e4.uiparts
-Require-Bundle: javax.annotation,
- javax.inject,
+Require-Bundle: jakarta.inject.jakarta.inject-api,
+ jakarta.annotation-api,
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.e4.core.contexts,
@@ -24,6 +24,6 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skf.refbooks.lib,
  org.toxsoft.skf.refbooks.gui
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: org.toxsoft.skf.refbooks.mws
 Bundle-ActivationPolicy: lazy

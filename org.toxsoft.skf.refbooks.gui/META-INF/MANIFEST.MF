@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.toxsoft.skf.refbooks.gui
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.toxsoft.skf.refbooks.gui.Activator
 Bundle-Vendor: toxsoft.org
-Require-Bundle: javax.inject,
- javax.annotation,
+Require-Bundle: jakarta.inject.jakarta.inject-api,
+ jakarta.annotation-api,
  org.eclipse.core.runtime,
  org.eclipse.ui;resolution:=optional,
  org.eclipse.rap.ui;resolution:=optional,
@@ -24,7 +24,7 @@ Require-Bundle: javax.inject,
  org.toxsoft.skf.refbooks.lib,
  org.toxsoft.core.jasperreports.gui,
  org.toxsoft.extlibs.jasperreports
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: org.toxsoft.skf.refbooks.gui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.skf.refbooks.gui,
