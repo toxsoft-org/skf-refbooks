@@ -53,10 +53,16 @@ public class TaskRefbooksUpload
   // implementation
   //
 
+  /**
+   * Uploads refbooks to the destination Sk-Connection.
+   * <p>
+   * First uploads refbooks definitions and then - items. Otherwise an error may occure if uploaded item has a rivet to
+   * the yet not uploaded refbook.
+   */
   private void uploadRefbooks() {
     ISkRefbookService srcRbServ = srcCoreApi.getService( ISkRefbookService.SERVICE_ID );
     ISkRefbookService destRbServ = destCoreApi.getService( ISkRefbookService.SERVICE_ID );
-    // iterate over all source refbooks
+    // upload refbook definitions
     IStridablesList<ISkRefbook> llSourceRefbooks = srcRbServ.listRefbooks();
     for( ISkRefbook rbSrc : llSourceRefbooks ) {
       if( !uploadRules.isRefbookToBeUploaded( rbSrc.id() ) ) { // bypass refbook if not marked for upload
@@ -71,7 +77,13 @@ public class TaskRefbooksUpload
       IDtoRefbookInfo dtoRefbook = DtoRefbookInfo.of( rbSrc );
       rbDest = destRbServ.defineRefbook( dtoRefbook );
       ++uploadedRefbooksCount;
-      // upload items
+    }
+    // upload items
+    for( ISkRefbook rbSrc : llSourceRefbooks ) {
+      if( !uploadRules.isRefbookToBeUploaded( rbSrc.id() ) ) { // bypass refbook if not marked for upload
+        continue;
+      }
+      ISkRefbook rbDest = destRbServ.findRefbook( rbSrc.id() );
       for( ISkRefbookItem rbi : rbSrc.listItems() ) {
         IDtoFullObject dtoItem = DtoFullObject.createDtoFullObject( rbi.skid(), srcCoreApi );
         rbDest.defineItem( dtoItem );
