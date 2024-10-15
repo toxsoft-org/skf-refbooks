@@ -113,7 +113,7 @@ public class RefbookItemsListPanel
     }
     this.setLayoutDeferred( true );
     try {
-      if( panel != null ) {
+      if( panel != null && panel.getControl() != null ) {
         panel.getControl().dispose();
         panel = null;
       }
