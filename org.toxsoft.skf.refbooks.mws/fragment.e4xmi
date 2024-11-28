@@ -9,7 +9,7 @@
     <elements xsi:type="application:Addon" xmi:id="_FNNPAJtHEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.addon.0" contributionURI="bundleclass://org.toxsoft.skf.refbooks.mws/org.toxsoft.skf.refbooks.mws.e4.addons.AddonWsRefbooks"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DHQ2MJtHEe6JCPlYOziqCQ" featurename="children" parentElementId="org.toxsoft.mws.perspectivestack.main">
-    <elements xsi:type="advanced:Perspective" xmi:id="_IMPL8JtHEe6JCPlYOziqCQ" elementId="org.toxsoft.ws.refbooks.persp.main" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/refbooks-list.png" tooltip="%Persp_Refbooks_D">
+    <elements xsi:type="advanced:Perspective" xmi:id="_IMPL8JtHEe6JCPlYOziqCQ" elementId="org.toxsoft.ws.refbooks.persp.main" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/rbitems-list.png" tooltip="%Persp_Refbooks_D">
       <children xsi:type="basic:PartSashContainer" xmi:id="_B7pI4JtNEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.partsashcontainer.0" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_EDqlUJtNEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.partstack.0" containerData="2000">
           <children xsi:type="basic:Part" xmi:id="_KYh1oJtNEe6JCPlYOziqCQ" elementId="org.toxsoft.ws.refbooks.part.refbooks_list" contributionURI="bundleclass://org.toxsoft.skf.refbooks.mws/org.toxsoft.skf.refbooks.mws.e4.uiparts.UipartRefbooksList" label="%PartRefbooksList" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/refbooks-list.png" tooltip="%PartRefbooksList_D"/>
@@ -21,12 +21,12 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DTWxcJtHEe6JCPlYOziqCQ" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_jKa3YJtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.handledmenuitem.persp_refbooks" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/refbooks-list.png" tooltip="%Persp_Refbooks_D" type="Radio" command="_4ldEUJtGEe6JCPlYOziqCQ">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_jKa3YJtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.handledmenuitem.persp_refbooks" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is16x16/rbitems-list.png" tooltip="%Persp_Refbooks_D" type="Radio" command="_4ldEUJtGEe6JCPlYOziqCQ">
       <parameters xmi:id="_puNUgJtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.parameter.0" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.ws.refbooks.persp.main"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DegRgJtHEe6JCPlYOziqCQ" featurename="children" parentElementId="org.toxsoft.mws.toolbar.perspectives">
-    <elements xsi:type="menu:HandledToolItem" xmi:id="_kMHk8JtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.handledtoolitem.persp_refbooks" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/refbooks-list.png" tooltip="%Persp_Refbooks_D" type="Radio" command="_4ldEUJtGEe6JCPlYOziqCQ">
+    <elements xsi:type="menu:HandledToolItem" xmi:id="_kMHk8JtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.handledtoolitem.persp_refbooks" label="%Persp_Refbooks" iconURI="platform:/plugin/org.toxsoft.skf.refbooks.gui/icons/is24x24/rbitems-list.png" tooltip="%Persp_Refbooks_D" type="Radio" command="_4ldEUJtGEe6JCPlYOziqCQ">
       <parameters xmi:id="_r8BP4JtMEe6JCPlYOziqCQ" elementId="org.toxsoft.skf.refbooks.mws.parameter.1" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.ws.refbooks.persp.main"/>
     </elements>
   </fragments>
