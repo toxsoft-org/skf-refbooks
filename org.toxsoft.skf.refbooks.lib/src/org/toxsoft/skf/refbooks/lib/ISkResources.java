@@ -11,27 +11,27 @@ interface ISkResources {
   // ------------------------------------------------------------------------------------
   // USkat entities are defined only in English, l10n done via USkat localization service
 
-  String STR_N_ITEM_CLASS_ID       = "Item class";
-  String STR_D_ITEM_CLASS_ID       = "Refbook item class ID";
-  String STR_N_REFBOOK_ITEM_CHANGE = "RB item";
-  String STR_D_REFBOOK_ITEM_CHANGE = "Refbook item changed";
-  String STR_N_CHANGE_AUTHOR       = "Author";
-  String STR_D_CHANGE_AUTHOR       = "The user (if applicable) who changed the refbook";
-  String STR_N_CRUD_OP             = "CRUD operation";
-  String STR_D_CRUD_OP             = "What happened with item: CREATE, CHANGE, REMOVE";
-  String STR_N_ITEM_SKID           = "Item SKID";
-  String STR_D_ITEM_SKID           = "SKID of the affected item";
-  String STR_N_OLD_ATTRS           = "Old attrs";
-  String STR_D_OLD_ATTRS           = "Values of refbook item attributes before change, or nothing if item just created";
-  String STR_N_NEW_ATTRS           = "New attrs";
-  String STR_D_NEW_ATTRS           = "Values of refbook item attributes after change, or nothing if item just removed";
-  String STR_N_OLD_LINKS           = "Old links";
-  String STR_D_OLD_LINKS           = "Values of refbook item links before change, or nothing if item just created";
-  String STR_N_NEW_LINKS           = "New links";
-  String STR_D_NEW_LINKS           = "Values of refbook item links after change, or nothing if item just removed";
-  String STR_N_OLD_RIVETS          = "Old rivets";
-  String STR_D_OLD_RIVETS          = "Values of refbook item rivets before change, or nothing if item just created";
-  String STR_N_NEW_RIVETS          = "New rivets";
-  String STR_D_NEW_RIVETS          = "Values of refbook item rivets after change, or nothing if item just removed";
+  String STR_ITEM_CLASS_ID         = Messages.getString( "STR_ITEM_CLASS_ID" );         //$NON-NLS-1$
+  String STR_ITEM_CLASS_ID_D       = Messages.getString( "STR_ITEM_CLASS_ID_D" );       //$NON-NLS-1$
+  String STR_REFBOOK_ITEM_CHANGE   = Messages.getString( "STR_REFBOOK_ITEM_CHANGE" );   //$NON-NLS-1$
+  String STR_REFBOOK_ITEM_CHANGE_D = Messages.getString( "STR_REFBOOK_ITEM_CHANGE_D" ); //$NON-NLS-1$
+  String STR_CHANGE_AUTHOR         = Messages.getString( "STR_CHANGE_AUTHOR" );         //$NON-NLS-1$
+  String STR_CHANGE_AUTHOR_D       = Messages.getString( "STR_CHANGE_AUTHOR_D" );       //$NON-NLS-1$
+  String STR_CRUD_OP               = Messages.getString( "STR_CRUD_OP" );               //$NON-NLS-1$
+  String STR_CRUD_OP_D             = Messages.getString( "STR_CRUD_OP_D" );             //$NON-NLS-1$
+  String STR_ITEM_SKID             = Messages.getString( "STR_ITEM_SKID" );             //$NON-NLS-1$
+  String STR_ITEM_SKID_D           = Messages.getString( "STR_ITEM_SKID_D" );           //$NON-NLS-1$
+  String STR_OLD_ATTRS             = Messages.getString( "STR_OLD_ATTRS" );             //$NON-NLS-1$
+  String STR_OLD_ATTRS_D           = Messages.getString( "STR_OLD_ATTRS_D" );           //$NON-NLS-1$
+  String STR_NEW_ATTRS             = Messages.getString( "STR_NEW_ATTRS" );             //$NON-NLS-1$
+  String STR_NEW_ATTRS_D           = Messages.getString( "STR_NEW_ATTRS_D" );           //$NON-NLS-1$
+  String STR_OLD_LINKS             = Messages.getString( "STR_OLD_LINKS" );             //$NON-NLS-1$
+  String STR_OLD_LINKS_D           = Messages.getString( "STR_OLD_LINKS_D" );           //$NON-NLS-1$
+  String STR_NEW_LINKS             = Messages.getString( "STR_NEW_LINKS" );             //$NON-NLS-1$
+  String STR_NEW_LINKS_D           = Messages.getString( "STR_NEW_LINKS_D" );           //$NON-NLS-1$
+  String STR_OLD_RIVETS            = Messages.getString( "STR_OLD_RIVETS" );            //$NON-NLS-1$
+  String STR_OLD_RIVETS_D          = Messages.getString( "STR_OLD_RIVETS_D" );          //$NON-NLS-1$
+  String STR_NEW_RIVETS            = Messages.getString( "STR_NEW_RIVETS" );            //$NON-NLS-1$
+  String STR_NEW_RIVETS_D          = Messages.getString( "STR_NEW_RIVETS_D" );          //$NON-NLS-1$
 
 }

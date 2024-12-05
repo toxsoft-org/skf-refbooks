@@ -26,7 +26,7 @@ interface ISkResources {
   // ------------------------------------------------------------------------------------
   // USkat entities are defined only in English, l10n done via USkat localization service
 
-  String STR_REFBOOK_CLASS   = "Refbook";                                                                      //$NON-NLS-1$
-  String STR_REFBOOK_CLASS_D = "The refbook is collection of items with the same, refbook-specific structure"; //$NON-NLS-1$
+  String STR_REFBOOK_CLASS   = Messages.getString( "STR_REFBOOK_CLASS" );   //$NON-NLS-1$
+  String STR_REFBOOK_CLASS_D = Messages.getString( "STR_REFBOOK_CLASS_D" ); //$NON-NLS-1$
 
 }

@@ -57,8 +57,8 @@ public interface ISkRefbookServiceHardConstants {
    * Attribute {@link ISkRefbook#itemClassId()}.
    */
   IDtoAttrInfo ATRINF_ITEM_CLASS_ID = DtoAttrInfo.create2( ATRID_ITEM_CLASS_ID, DDEF_IDPATH, //
-      TSID_NAME, STR_N_ITEM_CLASS_ID, //
-      TSID_DESCRIPTION, STR_D_ITEM_CLASS_ID, //
+      TSID_NAME, STR_ITEM_CLASS_ID, //
+      TSID_DESCRIPTION, STR_ITEM_CLASS_ID_D, //
       TSID_DEFAULT_VALUE, AvUtils.AV_STR_EMPTY //
   );
 
@@ -135,8 +135,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_CHANGE_AUTHOR} parameter definition.
    */
   IDataDef EVPRMDEF_CHANGE_AUTHOR = DataDef.create( EVPRMID_CHANGE_AUTHOR, VALOBJ, //
-      TSID_NAME, STR_N_CHANGE_AUTHOR, //
-      TSID_DESCRIPTION, STR_D_CHANGE_AUTHOR, //
+      TSID_NAME, STR_CHANGE_AUTHOR, //
+      TSID_DESCRIPTION, STR_CHANGE_AUTHOR_D, //
       TSID_IS_MANDATORY, AV_TRUE, //
       TSID_KEEPER_ID, Skid.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_FALSE //
@@ -146,8 +146,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_CRUD_OP} parameter definition.
    */
   IDataDef EVPRMDEF_CRUD_OP = DataDef.create( EVPRMID_CRUD_OP, VALOBJ, //
-      TSID_NAME, STR_N_CRUD_OP, //
-      TSID_DESCRIPTION, STR_D_CRUD_OP, //
+      TSID_NAME, STR_CRUD_OP, //
+      TSID_DESCRIPTION, STR_CRUD_OP_D, //
       TSID_IS_MANDATORY, AV_TRUE, //
       TSID_KEEPER_ID, ECrudOp.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_FALSE //
@@ -157,8 +157,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_ITEM_SKID} parameter definition.
    */
   IDataDef EVPRMDEF_ITEM_SKID = DataDef.create( EVPRMID_ITEM_SKID, VALOBJ, //
-      TSID_NAME, STR_N_ITEM_SKID, //
-      TSID_DESCRIPTION, STR_D_ITEM_SKID, //
+      TSID_NAME, STR_ITEM_SKID, //
+      TSID_DESCRIPTION, STR_ITEM_SKID_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, Skid.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_FALSE //
@@ -168,8 +168,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_OLD_ATTRS} parameter definition.
    */
   IDataDef EVPRMDEF_OLD_ATTRS = DataDef.create( EVPRMID_OLD_ATTRS, VALOBJ, //
-      TSID_NAME, STR_N_OLD_ATTRS, //
-      TSID_DESCRIPTION, STR_D_OLD_ATTRS, //
+      TSID_NAME, STR_OLD_ATTRS, //
+      TSID_DESCRIPTION, STR_OLD_ATTRS_D, //
       TSID_IS_MANDATORY, AV_TRUE, //
       TSID_KEEPER_ID, OptionSetKeeper.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_FALSE //
@@ -179,8 +179,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_NEW_ATTRS} parameter definition.
    */
   IDataDef EVPRMDEF_NEW_ATTRS = DataDef.create( EVPRMID_NEW_ATTRS, VALOBJ, //
-      TSID_NAME, STR_N_NEW_ATTRS, //
-      TSID_DESCRIPTION, STR_D_NEW_ATTRS, //
+      TSID_NAME, STR_NEW_ATTRS, //
+      TSID_DESCRIPTION, STR_NEW_ATTRS_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, OptionSetKeeper.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_TRUE, //
@@ -191,8 +191,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_OLD_LINKS} parameter definition.
    */
   IDataDef EVPRMDEF_OLD_LINKS = DataDef.create( EVPRMID_OLD_LINKS, VALOBJ, //
-      TSID_NAME, STR_N_OLD_LINKS, //
-      TSID_DESCRIPTION, STR_D_OLD_LINKS, //
+      TSID_NAME, STR_OLD_LINKS, //
+      TSID_DESCRIPTION, STR_OLD_LINKS_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, MappedSkids.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_TRUE, //
@@ -203,8 +203,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_NEW_LINKS} parameter definition.
    */
   IDataDef EVPRMDEF_NEW_LINKS = DataDef.create( EVPRMID_NEW_LINKS, VALOBJ, //
-      TSID_NAME, STR_N_NEW_LINKS, //
-      TSID_DESCRIPTION, STR_D_NEW_LINKS, //
+      TSID_NAME, STR_NEW_LINKS, //
+      TSID_DESCRIPTION, STR_NEW_LINKS_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, MappedSkids.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_TRUE, //
@@ -214,8 +214,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_OLD_RIVETS} parameter definition.
    */
   IDataDef EVPRMDEF_OLD_RIVETS = DataDef.create( EVPRMID_OLD_RIVETS, VALOBJ, //
-      TSID_NAME, STR_N_OLD_RIVETS, //
-      TSID_DESCRIPTION, STR_D_OLD_RIVETS, //
+      TSID_NAME, STR_OLD_RIVETS, //
+      TSID_DESCRIPTION, STR_OLD_RIVETS_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, MappedSkids.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_TRUE, //
@@ -226,8 +226,8 @@ public interface ISkRefbookServiceHardConstants {
    * {@link #EVPRMID_NEW_RIVETS} parameter definition.
    */
   IDataDef EVPRMDEF_NEW_RIVETS = DataDef.create( EVPRMID_NEW_RIVETS, VALOBJ, //
-      TSID_NAME, STR_N_NEW_RIVETS, //
-      TSID_DESCRIPTION, STR_D_NEW_RIVETS, //
+      TSID_NAME, STR_NEW_RIVETS, //
+      TSID_DESCRIPTION, STR_NEW_RIVETS_D, //
       TSID_IS_MANDATORY, AV_FALSE, //
       TSID_KEEPER_ID, MappedSkids.KEEPER_ID, //
       TSID_IS_NULL_ALLOWED, AV_TRUE, //
@@ -256,8 +256,8 @@ public interface ISkRefbookServiceHardConstants {
           EVPRMDEF_NEW_RIVETS //
       ), //
       OptionSetUtils.createOpSet( //
-          TSID_NAME, STR_N_REFBOOK_ITEM_CHANGE, //
-          TSID_DESCRIPTION, STR_D_REFBOOK_ITEM_CHANGE //
+          TSID_NAME, STR_REFBOOK_ITEM_CHANGE, //
+          TSID_DESCRIPTION, STR_REFBOOK_ITEM_CHANGE_D //
       ) //
   );
 
