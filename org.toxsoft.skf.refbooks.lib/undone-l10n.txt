@@ -1,2 +1,4 @@
 --- org.toxsoft.skf.refbooks.lib
 ++- org.toxsoft.skf.refbooks.lib.impl
+не вынесены константы:
+    org.toxsoft.skf.refbooks.lib.ISkRefbookServiceHardConstants
