@@ -48,7 +48,7 @@ public class SkExtServiceRefbooks
   /**
    * Service creator singleton.
    */
-  public static final ISkServiceCreator<AbstractSkService> CREATOR = SkExtServiceRefbooks::new;
+  public static final ISkServiceCreator<SkExtServiceRefbooks> CREATOR = SkExtServiceRefbooks::new;
 
   /**
    * {@link ISkRefbookService#eventer()} implementation.
@@ -206,8 +206,8 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbook rb : rbs ) {
         if( rb.nmName().equals( aRefbookInfo.nmName() ) && // новое имя уже встречается?
-        (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый
-                                                                                 // справочник
+            (aExistingRefbook == null || !aExistingRefbook.id().equals( rb.id() )) ) // исключим редактируемый
+                                                                                     // справочник
         {
           vr = ValidationResult.warn( FMT_WARN_RB_NAME_ALREADY_EXISTS, aRefbookInfo.nmName() );
         }
@@ -237,7 +237,7 @@ public class SkExtServiceRefbooks
       // предупреждение о дублировании имени
       for( ISkRefbookItem item : items ) {
         if( item.nmName().equals( aItemInfo.nmName() ) && // новое имя уже встречается?
-        (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
+            (aExistingItem == null || !aExistingItem.id().equals( item.id() )) ) // исключим редактируемый элемент
         {
           vr = ValidationResult.warn( FMT_WARN_ITEM_NAME_ALREADY_EXISTS, aItemInfo.nmName() );
         }
