@@ -23,6 +23,10 @@ import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 @SuppressWarnings( "javadoc" )
 public interface IWsRefooksConstants {
 
+  // visual elements ids
+  String E4_VISUAL_ELEM_ID_PERSP_REFBOOKS      = "org.toxsoft.ws.refbooks.persp.main";                          //$NON-NLS-1$
+  String E4_VISUAL_ELEM_ID_MENU_ITEEM_REFBOOKS = "org.toxsoft.skf.refbooks.mws.handledmenuitem.persp_refbooks"; //$NON-NLS-1$
+  String E4_VISUAL_ELEM_ID_TOOL_ITEEM_REFBOOKS = "org.toxsoft.skf.refbooks.mws.handledtoolitem.persp_refbooks"; //$NON-NLS-1$
   // ------------------------------------------------------------------------------------
   // WS_RB
 
@@ -34,9 +38,9 @@ public interface IWsRefooksConstants {
   // ------------------------------------------------------------------------------------
   // E4
 
-  String PERSPID_WS_RB_MAIN   = "org.toxsoft.ws.refbooks.persp.main";         //$NON-NLS-1$
-  String PARTSTACKID_REFBOOKS_MAIN     = "org.toxsoft.ws.refbooks.partstack.main";     //$NON-NLS-1$
-  String PARTID_REFBOOKS_LIST = "org.toxsoft.ws.refbooks.part.refbooks_list"; //$NON-NLS-1$
+  String PERSPID_WS_RB_MAIN        = "org.toxsoft.ws.refbooks.persp.main";         //$NON-NLS-1$
+  String PARTSTACKID_REFBOOKS_MAIN = "org.toxsoft.ws.refbooks.partstack.main";     //$NON-NLS-1$
+  String PARTID_REFBOOKS_LIST      = "org.toxsoft.ws.refbooks.part.refbooks_list"; //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Icons

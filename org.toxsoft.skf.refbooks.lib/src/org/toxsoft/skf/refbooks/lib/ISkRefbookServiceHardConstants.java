@@ -3,6 +3,7 @@ package org.toxsoft.skf.refbooks.lib;
 import static org.toxsoft.core.tslib.av.EAtomicType.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
+import static org.toxsoft.skf.refbooks.lib.ISkRefbookService.*;
 import static org.toxsoft.skf.refbooks.lib.ISkResources.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
@@ -18,6 +19,7 @@ import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.txtmatch.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
+import org.toxsoft.uskat.core.api.users.ability.*;
 import org.toxsoft.uskat.core.impl.dto.*;
 
 /**
@@ -311,4 +313,36 @@ public interface ISkRefbookServiceHardConstants {
     return new Skid( CLSID_REFBOOK, aRefbookId );
   }
 
+  /**
+   * id тип возможности «Редактор справочников»
+   */
+  String ABKINDID_REFBOOKS = SERVICE_ID + ".abkind.refbooks";
+
+  /**
+   * id возможности редактирования значений
+   */
+  String ABILITYID_EDIT_REFBOOK_VALUES = SERVICE_ID + ".ability.edit_refbook_values"; //
+
+  /**
+   * id возможности редактирования структуры
+   */
+  String ABILITYID_EDIT_REFBOOK_SRUCTS = SERVICE_ID + ".ability.edit_refbook_structs"; //
+
+  /**
+   * создание «своего» типа
+   */
+  IDtoSkAbilityKind ABKIND_REFBOOKS =
+      DtoSkAbilityKind.create( ABKINDID_REFBOOKS, STR_ABKIND_REFBOOKS, STR_ABKIND_REFBOOKS_D );
+
+  /**
+   * создание возможности редактирования значений
+   */
+  IDtoSkAbility ABILITY_EDIT_REFBOOK_VALUES = DtoSkAbility.create( ABILITYID_EDIT_REFBOOK_VALUES, ABKINDID_REFBOOKS,
+      STR_ABILITY_EDIT_REFBOOK_VALUES, STR_ABILITY_EDIT_REFBOOKS_VALUE_D );
+
+  /**
+   * создание возможности редактирования структуры
+   */
+  IDtoSkAbility ABILITY_EDIT_REFBOOK_STRUCTS = DtoSkAbility.create( ABILITYID_EDIT_REFBOOK_SRUCTS, ABKINDID_REFBOOKS,
+      STR_ABILITY_EDIT_REFBOOK_STRUCTS, STR_ABILITY_EDIT_REFBOOK_STRUCTS_D );
 }

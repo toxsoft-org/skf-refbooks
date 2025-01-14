@@ -13,6 +13,7 @@ import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.uskat.core.api.evserv.*;
+import org.toxsoft.uskat.core.api.users.ability.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
@@ -123,7 +124,15 @@ public class RefbookItemsListPanel
         // инициализация GUI
         ITsGuiContext ctx = new TsGuiContext( tsContext() );
         IM5LifecycleManager<ISkRefbookItem> lm = model.getLifecycleManager( skConn() );
-        panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
+
+        ISkAbility canEditValues = skConn().coreApi().userService().abilityManager()
+            .findAbility( ISkRefbookServiceHardConstants.ABILITY_EDIT_REFBOOK_VALUES.id() );
+        if( skConn().coreApi().userService().abilityManager().isAbilityAllowed( canEditValues.id() ) ) {
+          panel = model.panelCreator().createCollEditPanel( ctx, lm.itemsProvider(), lm );
+        }
+        else {
+          panel = model.panelCreator().createCollViewerPanel( ctx, lm.itemsProvider() );
+        }
         panel.createControl( this );
         panel.getControl().setLayoutData( BorderLayout.CENTER );
       }

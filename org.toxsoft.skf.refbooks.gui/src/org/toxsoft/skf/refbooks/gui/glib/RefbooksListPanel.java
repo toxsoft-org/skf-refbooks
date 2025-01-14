@@ -22,6 +22,8 @@ import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.gui.km5.*;
 import org.toxsoft.skf.refbooks.lib.*;
+import org.toxsoft.uskat.core.api.users.ability.*;
+import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
@@ -62,7 +64,17 @@ public class RefbooksListPanel
     IM5LifecycleManager<ISkRefbook> lm = model.getLifecycleManager( skConn() );
     // setup refbooks list UI depending on administrator/user mode
     ITsGuiContext ctx = new TsGuiContext( tsContext() );
-    OPDEF_IS_ACTIONS_CRUD.setValue( ctx.params(), AV_TRUE );
+    ISkConnectionSupplier connSup = tsContext().get( ISkConnectionSupplier.class );
+    ISkConnection conn = connSup.getConn( aUsedConnId );
+
+    ISkAbility canEditValues = conn.coreApi().userService().abilityManager()
+        .findAbility( ISkRefbookServiceHardConstants.ABILITY_EDIT_REFBOOK_VALUES.id() );
+    boolean hasCRUD = true;
+    if( !conn.coreApi().userService().abilityManager().isAbilityAllowed( canEditValues.id() ) ) {
+      hasCRUD = false;
+    }
+
+    OPDEF_IS_ACTIONS_CRUD.setValue( ctx.params(), hasCRUD ? AV_TRUE : AV_FALSE );
     OPDEF_IS_ACTIONS_HIDE_PANES.setValue( ctx.params(), avBool( aAdminMode ) );
     OPDEF_IS_SUMMARY_PANE.setValue( ctx.params(), avBool( aAdminMode ) );
     OPDEF_IS_DETAILS_PANE.setValue( ctx.params(), AV_TRUE );
