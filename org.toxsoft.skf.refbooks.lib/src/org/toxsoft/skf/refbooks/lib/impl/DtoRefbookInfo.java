@@ -77,6 +77,31 @@ public class DtoRefbookInfo
     return info;
   }
 
+  /**
+   * Creates refbook description.
+   *
+   * @param aRefbookId String - the refbook ID (IDpath)
+   * @param aParams {@link IOptionSet} - {@link #params()} initial values
+   * @param aAttrInfos {@link IStridablesList}&lt; {@link IDtoAttrInfo}&lt; - attributes info list
+   * @param aClobInfos {@link IStridablesList}&lt; {@link IDtoClobInfo}&lt; - CLOBs info list
+   * @param aRivetInfos {@link IStridablesList}&lt; {@link IDtoRivetInfo}&lt; - rivets info list
+   * @param aLinkInfos {@link IStridablesList}&lt; {@link IDtoLinkInfo}&lt; - links info list
+   * @return {@link DtoRefbookInfo} - created instance
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException invalid source
+   */
+  public static DtoRefbookInfo create( String aRefbookId, IOptionSet aParams, ///
+      IStridablesList<IDtoAttrInfo> aAttrInfos, IStridablesList<IDtoClobInfo> aClobInfos,
+      IStridablesList<IDtoRivetInfo> aRivetInfos, IStridablesList<IDtoLinkInfo> aLinkInfos ) {
+    TsNullArgumentRtException.checkNulls( aRefbookId, aParams );
+    DtoRefbookInfo dtoRefbook = new DtoRefbookInfo( aRefbookId, aParams );
+    dtoRefbook.attrInfos().addAll( aAttrInfos );
+    dtoRefbook.clobInfos().addAll( aClobInfos );
+    dtoRefbook.rivetInfos().addAll( aRivetInfos );
+    dtoRefbook.linkInfos().addAll( aLinkInfos );
+    return dtoRefbook;
+  }
+
   // ------------------------------------------------------------------------------------
   // IDtoRefbookInfo
   //

@@ -103,4 +103,13 @@ public interface ISkRefbookService
    */
   ITsEventer<ISkRefbookServiceListener> eventer();
 
+  // ------------------------------------------------------------------------------------
+  // Inline methods for convenience
+  //
+
+  @SuppressWarnings( "javadoc" )
+  default ISkRefbook getRefbook( String aRefbookId ) {
+    return TsItemNotFoundRtException.checkNull( findRefbook( aRefbookId ) );
+  }
+
 }
