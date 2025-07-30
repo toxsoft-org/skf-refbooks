@@ -65,18 +65,23 @@ public class TaskRefbooksUpload
     // upload refbook definitions
     IStridablesList<ISkRefbook> llSourceRefbooks = srcRbServ.listRefbooks();
     for( ISkRefbook rbSrc : llSourceRefbooks ) {
-      if( !uploadRules.isRefbookToBeUploaded( rbSrc.id() ) ) { // bypass refbook if not marked for upload
-        continue;
+      try {
+        if( !uploadRules.isRefbookToBeUploaded( rbSrc.id() ) ) { // bypass refbook if not marked for upload
+          continue;
+        }
+        // clear existing refbook if needed
+        ISkRefbook rbDest = destRbServ.findRefbook( rbSrc.id() );
+        if( rbDest != null && uploadRules.isRefbookToBeClearedBeforeUpload( rbDest.id() ) ) {
+          rbDest.removeAllItems();
+        }
+        // create/edit refbook
+        IDtoRefbookInfo dtoRefbook = DtoRefbookInfo.of( rbSrc );
+        rbDest = destRbServ.defineRefbook( dtoRefbook );
+        ++uploadedRefbooksCount;
       }
-      // clear existing refbook if needed
-      ISkRefbook rbDest = destRbServ.findRefbook( rbSrc.id() );
-      if( rbDest != null && uploadRules.isRefbookToBeClearedBeforeUpload( rbDest.id() ) ) {
-        rbDest.removeAllItems();
+      catch( Throwable e ) {
+        e.printStackTrace();
       }
-      // create/edit refbook
-      IDtoRefbookInfo dtoRefbook = DtoRefbookInfo.of( rbSrc );
-      rbDest = destRbServ.defineRefbook( dtoRefbook );
-      ++uploadedRefbooksCount;
     }
     // upload items
     for( ISkRefbook rbSrc : llSourceRefbooks ) {
