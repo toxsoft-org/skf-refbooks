@@ -10,6 +10,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skf.refbooks.lib.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
+import org.toxsoft.uskat.core.impl.dto.*;
 
 /**
  * {@link IDtoRefbookInfo} implementation.
@@ -100,6 +101,50 @@ public class DtoRefbookInfo
     dtoRefbook.rivetInfos().addAll( aRivetInfos );
     dtoRefbook.linkInfos().addAll( aLinkInfos );
     return dtoRefbook;
+  }
+
+  /**
+   * Creates refbook definition DTO.
+   *
+   * @param aRefbookId String - the refbook ID (IDpath)
+   * @param aParams {@link IOptionSet} - {@link #params()} initial values
+   * @param aPropInfos - {@link DtoAbstractClassPropInfoBase}[] - property definitions array
+   * @return {@link DtoRefbookInfo} - created instance
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException any ID is not an IDpath
+   * @throws TsIllegalArgumentRtException disallowed property kind encountered
+   */
+  public static DtoRefbookInfo create2( String aRefbookId, IOptionSet aParams, IDtoClassPropInfoBase... aPropInfos ) {
+    TsNullArgumentRtException.checkNulls( aRefbookId, aParams );
+    TsErrorUtils.checkArrayArg( aPropInfos );
+    DtoRefbookInfo dto = new DtoRefbookInfo( aRefbookId, aParams );
+    for( IDtoClassPropInfoBase propInf : aPropInfos ) {
+      switch( propInf.kind() ) {
+        case ATTR: {
+          dto.attrInfos.add( (DtoAttrInfo)propInf );
+          break;
+        }
+        case CLOB: {
+          dto.clobInfos.add( (DtoClobInfo)propInf );
+          break;
+        }
+        case LINK: {
+          dto.linkInfos.add( (DtoLinkInfo)propInf );
+          break;
+        }
+        case RIVET: {
+          dto.rivetInfos.add( (DtoRivetInfo)propInf );
+          break;
+        }
+        case CMD:
+        case EVENT:
+        case RTDATA:
+          throw new TsIllegalArgumentRtException( propInf.kind().id() );
+        default:
+          break;
+      }
+    }
+    return dto;
   }
 
   // ------------------------------------------------------------------------------------
