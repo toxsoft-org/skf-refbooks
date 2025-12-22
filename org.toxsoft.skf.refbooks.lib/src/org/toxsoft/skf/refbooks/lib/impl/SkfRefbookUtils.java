@@ -19,7 +19,6 @@ public class SkfRefbookUtils {
     ISkRefbookService refbookService = aCoreApi.findService( ISkRefbookService.SERVICE_ID );
     if( refbookService == null ) {
       refbookService = aCoreApi.addService( SkExtServiceRefbooks.CREATOR );
-      // TODO:
     }
   };
 
@@ -27,9 +26,6 @@ public class SkfRefbookUtils {
    * The plugin initialization must be called before any action to access classes in this plugin.
    */
   public static void initialize() {
-    // TODO:
-    // TsValobjUtils.registerKeeperIfNone( ESkAlarmSeverity.KEEPER_ID, ESkAlarmSeverity.KEEPER );
-    // SkCoreUtils.registerSkServiceCreator( SkAlarmService.CREATOR );
     SkCoreUtils.registerCoreApiHandler( coreRegistrationHandler );
   }
 
