@@ -41,9 +41,10 @@ public class RefbookItemsListPanel
         case LIST: {
           if( refbook != null ) {
             ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
-            if( rbServ.findRefbook( refbook.id() ) == null ) { // refbook was deleted
-              refbook = null;
-            }
+            refbook = rbServ.findRefbook( refbook.id() );
+            // if( rbServ.findRefbook( refbook.id() ) == null ) { // refbook was deleted
+            // refbook = null;
+            // }
           }
           reinitPanel();
           break;

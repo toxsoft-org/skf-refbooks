@@ -4,6 +4,7 @@ import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
 import static org.toxsoft.skf.refbooks.lib.ISkRefbookServiceHardConstants.*;
+import static org.toxsoft.skf.refbooks.lib.impl.ISkRefbookInternalConstants.*;
 import static org.toxsoft.skf.refbooks.lib.impl.ISkResources.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
@@ -11,6 +12,7 @@ import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.events.*;
+import org.toxsoft.core.tslib.bricks.events.msg.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.time.*;
@@ -44,6 +46,20 @@ import org.toxsoft.uskat.core.impl.dto.*;
 public class SkExtServiceRefbooks
     extends AbstractSkService
     implements ISkRefbookService {
+
+  /**
+   * FIXME 2026-02-24 GOGA error on refbook editing processing
+   * <p>
+   * there is a design error: #eventer must fire events only as a backend messages respond.<br>
+   * The idea is that when editing refbook structure, sequence of the events to the CoreApi client must be in the
+   * following order:
+   * <ul>
+   * <li>event from sysdescr about class change;</li>
+   * <li>event from the refbook service about refbook change.</li>
+   * </ul>
+   * Now refbook service informs BEFORE sysdescr, so KM5 model updates model but IskClassInfo at this point remains
+   * unchanged.
+   */
 
   /**
    * Service creator singleton.
@@ -334,6 +350,28 @@ public class SkExtServiceRefbooks
     return aClassId.startsWith( CLSID_PREFIX );
   }
 
+  @Override
+  protected boolean onBackendMessage( GenericMessage aMessage ) {
+    return switch( aMessage.messageId() ) {
+      case MSGID_REFBOOK_CRUD -> {
+        eventer.fireRefbookChanged( ///
+            aMessage.args().getValobj( MSGARGID_RBCRUD_OP ), ///
+            aMessage.args().getStr( MSGARGID_REFBOOK_ID, null ) ///
+        );
+        yield true;
+      }
+      // case MSGID_ITEM_CRUD -> {
+      // eventer.fireItemChanged( ///
+      // aMessage.args().getValobj( MSGARGID_CRUD_OP ), ///
+      // aMessage.args().getStr( MSGARGID_REFBOOK_ID ), ///
+      // aMessage.args().getValobj( MSGARGID_ITEM_SKID, null ) ///
+      // );
+      // yield true;
+      // }
+      default -> false;
+    };
+  }
+
   // ------------------------------------------------------------------------------------
   // implementation
   //
@@ -436,7 +474,11 @@ public class SkExtServiceRefbooks
     }
     // fire event
     ECrudOp op = oldRb != null ? ECrudOp.EDIT : ECrudOp.CREATE;
-    eventer.fireRefbookChanged( op, rb.strid() );
+    GtMessage msg = makeSiblingMessage2( MSGID_REFBOOK_CRUD, //
+        MSGARGID_RBCRUD_OP, avValobj( op ), //
+        MSGARGID_REFBOOK_ID, avStr( rb.strid() ) //
+    );
+    sendMessageToSiblings( msg );
     return rb;
   }
 
@@ -458,7 +500,11 @@ public class SkExtServiceRefbooks
       resumeCoreValidationAndEvents();
     }
     // fire event
-    eventer.fireRefbookChanged( ECrudOp.REMOVE, aRefbookId );
+    GtMessage msg = makeSiblingMessage2( MSGID_REFBOOK_CRUD, //
+        MSGARGID_RBCRUD_OP, avValobj( ECrudOp.REMOVE ), //
+        MSGARGID_REFBOOK_ID, avStr( aRefbookId ) //
+    );
+    sendMessageToSiblings( msg );
   }
 
   @Override

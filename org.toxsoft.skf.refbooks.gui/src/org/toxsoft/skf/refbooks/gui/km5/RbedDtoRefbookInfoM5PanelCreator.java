@@ -36,6 +36,7 @@ class RbedDtoRefbookInfoM5PanelCreator
   protected IM5CollectionPanel<IDtoRefbookInfo> doCreateCollEditPanel( ITsGuiContext aContext,
       IM5ItemsProvider<IDtoRefbookInfo> aItemsProvider, IM5LifecycleManager<IDtoRefbookInfo> aLifecycleManager ) {
     OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
+    OPDEF_IS_ADD_COPY_ACTION.setValue( aContext.params(), AV_TRUE );
     OPDEF_IS_ACTIONS_HIDE_PANES.setValue( aContext.params(), AV_TRUE );
     OPDEF_IS_FILTER_PANE.setValue( aContext.params(), AV_TRUE );
     OPDEF_IS_SUPPORTS_TREE.setValue( aContext.params(), AV_TRUE );
