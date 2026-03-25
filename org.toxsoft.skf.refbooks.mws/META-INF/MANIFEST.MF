@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Refbooks Plugin for Workstation
+Bundle-Name: Refbooks Plugin for Workstation (Multiple items viewer UIparts)
 Bundle-SymbolicName: org.toxsoft.skf.refbooks.mws;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.toxsoft.skf.refbooks.mws.Activator
@@ -18,7 +18,6 @@ Require-Bundle: jakarta.inject.jakarta.inject-api,
  org.eclipse.e4.ui.model.workbench,
  org.eclipse.e4.ui.workbench,
  org.toxsoft.core.tslib,
- org.toxsoft.core.singlesrc.rcp,
  org.toxsoft.core.tsgui,
  org.toxsoft.uskat.core,
  org.toxsoft.uskat.core.gui,

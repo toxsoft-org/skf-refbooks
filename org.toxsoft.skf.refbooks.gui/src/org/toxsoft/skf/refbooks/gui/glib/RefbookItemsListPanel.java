@@ -42,9 +42,6 @@ public class RefbookItemsListPanel
           if( refbook != null ) {
             ISkRefbookService rbServ = coreApi().getService( ISkRefbookService.SERVICE_ID );
             refbook = rbServ.findRefbook( refbook.id() );
-            // if( rbServ.findRefbook( refbook.id() ) == null ) { // refbook was deleted
-            // refbook = null;
-            // }
           }
           reinitPanel();
           break;

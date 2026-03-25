@@ -10,8 +10,6 @@ import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tslib.av.impl.*;
 import org.toxsoft.core.tslib.av.metainfo.*;
-import org.toxsoft.core.tslib.av.opset.impl.*;
-import org.toxsoft.core.tslib.bricks.apprefs.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 
@@ -80,15 +78,15 @@ public interface IWsRefooksConstants {
     ITsIconManager iconManager = aWinContext.get( ITsIconManager.class );
     iconManager.registerStdIconByIds( Activator.PLUGIN_ID, IWsRefooksConstants.class, PREFIX_OF_ICON_FIELD_NAME );
     //
-    IAppPreferences aprefs = aWinContext.get( IAppPreferences.class );
-    IPrefBundle pb = aprefs.defineBundle( PBID_WS_RB_MAIN, OptionSetUtils.createOpSet( //
-        TSID_NAME, STR_PB_WS_RB_MAIN, //
-        TSID_DESCRIPTION, STR_PB_WS_RB_MAIN_D, //
-        TSID_ICON_ID, ICONID_HZ_LOGO//
-    ) );
-    for( IDataDef dd : ALL_APREFS ) {
-      pb.defineOption( dd );
-    }
+    // IAppPreferences aprefs = aWinContext.get( IAppPreferences.class );
+    // IPrefBundle pb = aprefs.defineBundle( PBID_WS_RB_MAIN, OptionSetUtils.createOpSet( //
+    // TSID_NAME, STR_PB_WS_RB_MAIN, //
+    // TSID_DESCRIPTION, STR_PB_WS_RB_MAIN_D, //
+    // TSID_ICON_ID, ICONID_HZ_LOGO//
+    // ) );
+    // for( IDataDef dd : ALL_APREFS ) {
+    // pb.defineOption( dd );
+    // }
   }
 
 }

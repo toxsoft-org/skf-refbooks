@@ -5,7 +5,6 @@ package org.toxsoft.skf.refbooks.lib;
  *
  * @author hazard157
  */
-@SuppressWarnings( "nls" )
 interface ISkResources {
 
   // ------------------------------------------------------------------------------------

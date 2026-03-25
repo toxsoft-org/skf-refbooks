@@ -5,6 +5,7 @@ import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skf.refbooks.gui.ISkRefbooksGuiConstants.*;
 import static org.toxsoft.skf.refbooks.gui.km5.IKM5RefbooksConstants.*;
 import static org.toxsoft.skf.refbooks.gui.km5.ISkResources.*;
+import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
@@ -49,6 +50,10 @@ public class SkRefbookM5Model
   public SkRefbookM5Model( ISkConnection aConn ) {
     super( MID_KM5RB_REFBOOK, ISkRefbook.class, aConn );
     addFieldDefs( REFBOOK_ID, NAME, DESCRIPTION );
+    // tune attribute names
+    @SuppressWarnings( { "rawtypes", "unchecked" } )
+    M5FieldDef<ISkRefbook, ?> fdef = (M5FieldDef)fieldDefs().getByKey( AID_NAME );
+    fdef.setNameAndDescription( STR_REFBOOK_NAME, STR_REFBOOK_NAME_D );
   }
 
   @Override

@@ -115,6 +115,10 @@ class SkRefbookItemM5Mpc
   }
 
   private void printRefbook() {
+    if( itemsProvider().listItems().isEmpty() ) {
+      TsDialogUtils.warn( getShell(), FMT_WARN_NO_REFBOOK_ITEMS_TO_PRINT, model().nmName() );
+      return;
+    }
     try {
       ISkConnectionSupplier connectionSup = eclipseContext().get( ISkConnectionSupplier.class );
       ISkConnection connection = connectionSup.defConn();

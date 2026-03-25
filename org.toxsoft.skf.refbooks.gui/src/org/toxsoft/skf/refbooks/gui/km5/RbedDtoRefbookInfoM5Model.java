@@ -41,7 +41,7 @@ public class RbedDtoRefbookInfoM5Model
 
     @Override
     protected void doInit() {
-      setNameAndDescription( STR_N_REFBOOK_ID, STR_D_REFBOOK_ID );
+      setNameAndDescription( STR_REFBOOK_ID, STR_REFBOOK_ID_D );
       setFlags( M5FF_INVARIANT | M5FF_COLUMN );
     }
 
@@ -58,7 +58,7 @@ public class RbedDtoRefbookInfoM5Model
 
     @Override
     protected void doInit() {
-      setNameAndDescription( STR_N_REFBOOK_NAME, STR_D_REFBOOK_NAME );
+      setNameAndDescription( STR_REFBOOK_NAME, STR_REFBOOK_NAME_D );
       setFlags( M5FF_COLUMN );
     }
 

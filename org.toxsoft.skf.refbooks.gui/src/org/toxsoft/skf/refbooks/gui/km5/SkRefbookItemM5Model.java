@@ -42,6 +42,7 @@ public class SkRefbookItemM5Model
     addFieldDefs( STRID, NAME, DESCRIPTION );
     ISkRefbookService rbServ = aConn.coreApi().getService( ISkRefbookService.SERVICE_ID );
     ISkRefbook rb = rbServ.findRefbookByItemClassId( id() );
+    setNameAndDescription( rb.nmName(), rb.description() );
     TsInternalErrorRtException.checkNull( rb );
     IDtoRefbookInfo rbInfo = DtoRefbookInfo.of( rb );
     // attributes
@@ -79,6 +80,7 @@ public class SkRefbookItemM5Model
       fd.addFlags( M5FF_COLUMN );
       addFieldDefs( fd );
     }
+    // setup GUI creator
     setPanelCreator( new M5DefaultPanelCreator<>() {
 
       @Override
