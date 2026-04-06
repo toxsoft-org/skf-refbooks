@@ -108,7 +108,7 @@ public class SkExtServiceRefbooks
           l.onRefbookChanged( aOp, aRefbookId );
         }
         catch( Exception ex ) {
-          LoggerUtils.errorLogger().error( ex );
+          LoggerUtils.error( ex );
         }
       }
     }
@@ -119,7 +119,7 @@ public class SkExtServiceRefbooks
           l.onRefbookItemsChanged( aRefbookId, aEvents );
         }
         catch( Exception ex ) {
-          LoggerUtils.errorLogger().error( ex );
+          LoggerUtils.error( ex );
         }
       }
     }

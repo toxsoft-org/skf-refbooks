@@ -146,7 +146,7 @@ class SkRefbookItemM5Mpc
       JasperReportDialog.showPrint( printContext, jasperPrint );
     }
     catch( Exception ex ) {
-      LoggerUtils.errorLogger().error( ex );
+      LoggerUtils.error( ex );
       TsDialogUtils.error( getShell(), ex );
     }
 
