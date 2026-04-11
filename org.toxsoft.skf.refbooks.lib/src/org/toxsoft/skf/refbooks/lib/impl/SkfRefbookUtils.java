@@ -26,6 +26,9 @@ public class SkfRefbookUtils {
    * The plugin initialization must be called before any action to access classes in this plugin.
    */
   public static void initialize() {
+    // register Sk-Service
+    SkCoreUtils.registerSkServiceCreator( SkExtServiceRefbooks.CREATOR );
+    // register USkat startup code
     SkCoreUtils.registerCoreApiHandler( coreRegistrationHandler );
   }
 
