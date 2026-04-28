@@ -122,7 +122,10 @@ public class TaskRefbooksUpload
     ISkConnection destConn = REFDEF_IN_OPEN_SK_CONN.getRef( aInput );
     destCoreApi = destConn.coreApi();
     uploadRefbooks();
-    lop.finished( ValidationResult.info( FMT_INFO_REFBOOKS_UPLOADED, uploadedRefbooksCount, uploadedItemsCount ) );
+    ValidationResult vr =
+        ValidationResult.info( FMT_INFO_REFBOOKS_UPLOADED, uploadedRefbooksCount, uploadedItemsCount );
+    lop.finished( vr );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, vr );
   }
 
 }
