@@ -7,6 +7,7 @@ import org.toxsoft.skf.refbooks.gui.*;
  *
  * @author hazard157
  */
+@SuppressWarnings( "javadoc" )
 public interface ISkResources {
 
   String STR_REFBOOK        = Messages.getString( "STR_REFBOOK" );        //$NON-NLS-1$
